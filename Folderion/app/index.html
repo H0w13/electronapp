@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Folderion</title>
+  <link rel="stylesheet" type="text/css" href="./styles/main.css">
+  <link rel="stylesheet" type="text/css" href="./styles/ztree.metroStyle.css">
+  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <script>
+    if (typeof module === 'object') {window.module = module; module = undefined;}
+  </script>
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
+  <script type="text/javascript" src="./scripts/index.js"></script>
+  <script type="text/javascript" src="./scripts/external/jquery.ztree.all.min.js"></script>
+
+  <script type="text/javascript" src="./scripts/controllers/OperationController.js"></script>
+  <script type="text/javascript" src="scripts/services/fileservice.js"></script>
+  <script>
+    if (window.module) module = window.module;
+  </script>
+  <style>
+.node {
+  border: solid 1px white;
+  font: 10px sans-serif;
+  line-height: 12px;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px;
+}
+
+</style>
+</head>
+
+<body>
+  <div class="container" ng-app="folderion">
+    <div class="row">
+      <h1>Enhanced File Explorer</h1>
+    </div>    
+    <div class="row container" ng-controller="operation">
+      <div class="col-sm-3">
+        <label class="control-label" for="inputFolderPath">Select a folder:</label>
+      </div>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="inputFolderPath" ng-model="folderPath">
+      </div>
+      <div class="col-sm-1">
+        <a class=" btn btn-primary" href="#" role="button" ng-click="loadFolder()">Load</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <ul id="tree" class="ztree">
+        </ul>
+      </div>
+      <div id="map" class="col-md-9">
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

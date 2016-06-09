@@ -1,0 +1,7 @@
+{
+  "name": "folderion",
+  "version": "0.0.1",  
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.1"
+  }
+}
