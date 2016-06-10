@@ -1,12 +1,15 @@
 requirejs.config({
-  baseUrl: '/script',
+  baseUrl: 'scripts',
   paths: {
-    jquery: 'external/jquery/jquery.',
-    angular: 'external/angular/angular',
-    d3: 'external/d3/d3',
-    ztree: 'external/ztree/jquery.ztree.core-3.5',
+    jquery: 'external/jquery',
+    angular: 'external/angular',
+    d3: 'external/d3',
+    ztree: 'external/jquery.ztree.core-3.5',
   },
   shim: {
-      angular : { exports : 'angular'}
+    angular: {
+      exports: 'angular'
+    }
   }
 });
+requirejs(['folderion'], function(folderion) {});
