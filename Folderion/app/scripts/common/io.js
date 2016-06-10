@@ -1,4 +1,4 @@
-(function () {
+define(function () {
     var fs = require('fs');
 
     var fObjHelper = {
@@ -53,4 +53,4 @@
 
     return this;
 }
-)();
+);

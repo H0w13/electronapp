@@ -8,6 +8,9 @@ requirejs.config({
   shim: {
     angular: {
       exports: 'angular'
+    },
+    jquery:{
+      exports: 'jquery'
     }
   }
 });

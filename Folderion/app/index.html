@@ -15,23 +15,15 @@
   <script>
     if (window.module) module = window.module;
   </script>
-  <style>
-.node {
-  border: solid 1px white;
-  font: 10px sans-serif;
-  line-height: 12px;
-  overflow: hidden;
-  position: absolute;
-  text-indent: 2px;
-}
-
-</style>
 </head>
 
 <body>
   <div class="container" ng-app="folderion">
     <div class="row">
       <h1>Demo</h1>
+    </div>
+    <div class="row">
+      common toolbar
     </div>
     <div class="row container" ng-controller="operation">
       <div class="col-sm-3">
@@ -43,13 +35,17 @@
       <div class="col-sm-1">
         <a class=" btn btn-primary" href="#" role="button" ng-click="loadFolder()">Load</a>
       </div>
+      <div class="row">
+        operations
+      </div>
     </div>
     <div class="row">
       <div class="col-md-2">
         <ul id="tree" class="ztree">
         </ul>
       </div>
-      <div id="map" class="col-md-9">
+      <div class="col-md-10">
+        <div id="board"></div>
       </div>
     </div>
   </div>

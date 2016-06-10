@@ -4,5 +4,7 @@ define('folderion', ['angular'], function(angular) {
   return app;
 });
 
-requirejs(['services/fileservice', 'controllers/OperationController'], function(
-  controller) {});
+//services
+requirejs(['services/fileservice','services/chartservice']);
+//controllers
+requirejs(['controllers/operationcontroller']);
