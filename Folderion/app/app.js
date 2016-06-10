@@ -13,7 +13,7 @@ let mainWindow
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1000,
+    width: 1200,
     height: 800,
     frame: true
   })
@@ -21,7 +21,7 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html')
   
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
