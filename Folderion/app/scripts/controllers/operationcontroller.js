@@ -21,7 +21,7 @@ define(["folderion"], function (folderion) {
 			});
 		};
 
-		$scope.folderPath = "/home/howie/dev/Github/electronapp/Folderion/app";
+		$scope.folderPath = "";
 		$scope.loadFolder = function () {
 			fileservice.getSubItems($scope.folderPath, function (err, files) {
 				if (err)
@@ -32,10 +32,7 @@ define(["folderion"], function (folderion) {
 							files[i].children = getNextLevel(files[i].path, files[i], 1);
 						}
 					}
-					requirejs(["jquery"], function ($) {
-						$.fn.zTree.init($("#tree"), {}, files);
-						$scope.$emit("LoadFilesCompleted", files);
-					});
+					$scope.$emit("LoadFilesCompleted", files);
 				}
 			});
 		};

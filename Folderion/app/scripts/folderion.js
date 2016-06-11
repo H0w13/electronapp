@@ -10,7 +10,8 @@ requirejs(['services/fileservice','services/chartservice']);
 var controllers = [
   "root",
   "board",
-  "operation"
+  "operation",
+  "tree"
 ];
 requirejs(controllers.map(function(item, i){
   return 'controllers/' + item + 'controller';
