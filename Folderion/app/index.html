@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <div class="container" ng-app="folderion">
+  <div class="container" ng-app="folderion"  ng-controller="root">
     <div class="row">
       <h1>Demo</h1>
     </div>
@@ -44,7 +44,7 @@
         <ul id="tree" class="ztree">
         </ul>
       </div>
-      <div class="col-md-10">
+      <div class="col-md-10" ng-controller="board">
         <div id="board"></div>
       </div>
     </div>

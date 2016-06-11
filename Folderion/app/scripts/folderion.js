@@ -7,4 +7,11 @@ define('folderion', ['angular'], function(angular) {
 //services
 requirejs(['services/fileservice','services/chartservice']);
 //controllers
-requirejs(['controllers/operationcontroller']);
+var controllers = [
+  "root",
+  "board",
+  "operation"
+];
+requirejs(controllers.map(function(item, i){
+  return 'controllers/' + item + 'controller';
+}));
