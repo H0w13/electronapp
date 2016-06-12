@@ -17,6 +17,11 @@ define(["folderion"], function (folderion) {
                 });
             });
         });
+        $scope.$on('RefreshBoard', function (event, files) {
+            console.log(files);
+            $scope.files = files;            
+            $scope.drawBoard($scope.boardType);
+        });
 
         $scope.drawBoard = function (type) {
             $scope.boardType = type;
