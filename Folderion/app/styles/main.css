@@ -6,3 +6,26 @@
       position: absolute;
       text-indent: 2px;
     }
+
+.float-left{  
+  float:left;
+}
+.float-right{  
+  float:right;
+}
+.div-btn img{
+  width: 32px;
+  height:32px;
+}
+.div-btn-gray{  
+  opacity: 0.4;
+  filter: alpha(opacity=40); /* msie */
+}
+.div-btn-gray img{
+  width: 32px;
+  height:32px;
+}
+
+.padding-top-10{
+  padding-top: 10px;
+}

@@ -25,7 +25,7 @@
     <div class="row">
       common toolbar
     </div>
-    <div class="row container" ng-controller="operation">
+    <div class="padding-top-10 row" ng-controller="operation">
       <div class="col-sm-3">
         <label class="control-label" for="inputFolderPath">Select a folder:</label>
       </div>
@@ -35,25 +35,23 @@
       <div class="col-sm-1">
         <a class=" btn btn-primary" href="#" role="button" ng-click="loadFolder()">Load</a>
       </div>
-      <div class="row">
-        operations
-      </div>
     </div>
-    <div class="row">
+    <div class="padding-top-10 row">
       <div class="col-md-2" ng-controller="tree">
         <ul id="tree" class="ztree">
         </ul>
       </div>
       <div class="col-md-10" ng-controller="board">
-        <nav class="navbar navbar-default">
-          <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-              <li ng-class="boardType == 'filelist' ? 'active' : ''" ng-click="drawBoard('filelist')"><a href="#" >File List</a></li>
-              <li ng-class="boardType == 'treemap' ? 'active' : ''" ng-click="drawBoard('treemap')"><a href="#" >Tree Map</a></li>
-            </ul>
-          </div>
-        </nav>
-        <div id="board"></div>
+        <div>
+          <div class="div-btn float-left"><img src="styles/img/cut.png"></div>
+          <div class="div-btn float-left"><img src="styles/img/copy.png"></div>
+          <div class="div-btn float-left"><img src="styles/img/delete.png"></div>
+          <div ng-class="boardType == 'filelist' ? 'div-btn float-right' : 'div-btn-gray float-right'" ng-click="drawBoard('filelist')"><img src="styles/img/listview.png"></div>
+          <div ng-class="boardType == 'treemap' ? 'div-btn float-right' : 'div-btn-gray float-right'" ng-click="drawBoard('treemap')"><img src="styles/img/treeview.png"></div>
+        </div>
+        <div class="padding-top-10"> 
+          <div id="board"></div>
+        </div>
       </div>
     </div>
   </div>
