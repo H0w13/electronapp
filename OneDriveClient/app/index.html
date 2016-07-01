@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>One Drive Client</title>
+  <link rel="stylesheet" type="text/css" href="./styles/main.css">
+  <link rel="stylesheet" type="text/css" href="./styles/ztree.metroStyle.css">
+  <link rel="stylesheet" type="text/css" href="./styles/external.css">
+  <script>
+    if (typeof module === 'object') {window.module = module; module = undefined;}
+  </script>
+  <script src="./scripts/external/require.js" data-main="./scripts/libs"></script>
+  <script>
+    if (window.module) module = window.module;
+  </script>
+</head>
+
+<body>
+  <div class="container" ng-app="onedriveclient" ng-controller="root">
+    <div class="row" ng-controller="operation">
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default">Settings</button>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Help
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="padding-top-10 row">
+      <div class="col-sm-3">
+        <label class="control-label" for="inputFolderPath">Local sync folder:</label>
+      </div>
+      <div class="col-sm-9">
+        <span>{{folderPath}}</span>
+      </div>
+    </div>
+    <div class="padding-top-10 row">
+      <div class="col-md-2" ng-controller="tree">
+        <ul id="tree" class="ztree">
+        </ul>
+      </div>
+      <div class="col-md-10" ng-controller="board">
+        <div>
+          <div ng-class="boardType == 'filelist' ? 'div-btn float-right' : 'div-btn-gray float-right'" ng-click="drawBoard('filelist')"><img src="styles/img/listview.png"></div>
+          <div ng-class="boardType == 'treemap' ? 'div-btn float-right' : 'div-btn-gray float-right'" ng-click="drawBoard('treemap')"><img src="styles/img/treeview.png"></div>
+        </div>
+        <div class="padding-top-10">
+          <div id="board"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
