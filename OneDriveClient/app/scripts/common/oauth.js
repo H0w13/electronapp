@@ -1,3 +1,5 @@
+/** enhanced the oauth library of https://github.com/mawie81/electron-oauth2 */
+
 const Promise = require('pinkie-promise');
 const queryString = require('querystring');
 const fetch = require('node-fetch');
@@ -78,7 +80,7 @@ module.exports = function (config, windowParams, refWindow) {
             body: queryString.stringify(data)
         }).then(res => {
             if (res.error !== undefined) {
-                reject(res.error);
+                reject(res.error);                
             }
             else {
                 return res.json();

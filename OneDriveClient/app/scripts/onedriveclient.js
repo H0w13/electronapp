@@ -5,7 +5,7 @@ define('onedriveclient', ['angular'], function(angular) {
 });
 
 //services
-requirejs(['services/fileservice','services/chartservice', 'services/oauthservice']);
+requirejs(['services/fileservice','services/chartservice', 'services/onedriveservice']);
 //controllers
 var controllers = [
   "root",

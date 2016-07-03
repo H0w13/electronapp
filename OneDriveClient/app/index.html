@@ -6,8 +6,7 @@
   <meta charset="UTF-8">
   <title>One Drive Client</title>
   <link rel="stylesheet" type="text/css" href="./styles/main.css">
-  <link rel="stylesheet" type="text/css" href="./styles/ztree.metroStyle.css">
-  <link rel="stylesheet" type="text/css" href="./styles/external.css">
+  <link rel="stylesheet" type="text/css" href="./styles/metro.css">
   <script>
     if (typeof module === 'object') {window.module = module; module = undefined;}
   </script>
@@ -18,35 +17,30 @@
 </head>
 
 <body>
-  <div class="container" ng-app="onedriveclient" ng-controller="root">
+  <div class="grid" ng-app="onedriveclient" ng-controller="root">
     <div class="row" ng-controller="operation">
-      <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-default">Settings</button>
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Help
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="#">About</a></li>
-          </ul>
-        </div>
+      <div class="cell app-bar" data-role="appbar">
+        <a class="app-bar-element" href="#">OneDrive Client</a>
+        <ul class="app-bar-menu">
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Sync</a></li>
+        </ul>       
       </div>
     </div>
-    <div class="padding-top-10 row">
-      <div class="col-sm-3">
-        <label class="control-label" for="inputFolderPath">Local sync folder:</label>
+    <div class="padding-top-10 row cells4">
+      <div class="cell">
+        <label for="inputFolderPath">Local sync folder:</label>
       </div>
-      <div class="col-sm-9">
+      <div class="cell colspan3">
         <span>{{folderPath}}</span>
       </div>
     </div>
-    <div class="padding-top-10 row">
-      <div class="col-md-2" ng-controller="tree">
-        <ul id="tree" class="ztree">
+    <div class="padding-top-10 row cells4">
+      <div class="cell treeview" data-role="treeview" ng-controller="tree">
+        <ul id="tree">
         </ul>
       </div>
-      <div class="col-md-10" ng-controller="board">
+      <div class="cell colspan3" ng-controller="board">
         <div>
           <div ng-class="boardType == 'filelist' ? 'div-btn float-right' : 'div-btn-gray float-right'" ng-click="drawBoard('filelist')"><img src="styles/img/listview.png"></div>
           <div ng-class="boardType == 'treemap' ? 'div-btn float-right' : 'div-btn-gray float-right'" ng-click="drawBoard('treemap')"><img src="styles/img/treeview.png"></div>

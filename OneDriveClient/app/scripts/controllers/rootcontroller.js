@@ -11,6 +11,8 @@ define(["onedriveclient"], function (onedriveclient) {
         //load configuration
         requirejs(["config"], function (config) {
             $scope.folderPath = config.localfolder;
+            $scope.onedriveApiRoot = config.onedriveApiRoot;
+            $scope.authConfig = require('electron').remote.getGlobal('config');
             $scope.$broadcast("RootInitReady");
         });
     });

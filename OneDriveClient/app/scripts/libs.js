@@ -1,10 +1,16 @@
+// window.nodeRequire = require;
+// delete window.require;
+// delete window.exports;
+// delete window.module;
+
 requirejs.config({
   baseUrl: 'scripts',
   paths: {
-    jquery: 'external/jquery.all',
+    jquery: 'external/jquery.min',
     angular: 'external/angular',
     d3: 'external/d3',
-    punycode: 'external/punycode'
+    punycode: 'external/punycode',
+    metro: 'external/metro.min'
   },
   shim: {
     angular: {

@@ -63,14 +63,16 @@ app.on('ready', () => {
   myApiOauth.getAccessToken(options)
     .then(token => {
       // use your token.access_token 
-      global.access_token = token.access_token;
-      global.user_id = token.user_id ;   
+      global.config = {
+        access_token : token.access_token,
+        user_id : token.user_id
+      };
       mainWindow.loadURL('file://' + __dirname + '/index.html');
-    //   myApiOauth.refreshToken(token.refresh_token)
-    //     .then(newToken => {
-    //       //use your new token 
-    //       process.stdout.write("newToken="+newToken+"\n");
-    //     });
+      //   myApiOauth.refreshToken(token.refresh_token)
+      //     .then(newToken => {
+      //       //use your new token 
+      //       process.stdout.write("newToken="+newToken+"\n");
+      //     });
     });
 });
 
@@ -88,7 +90,7 @@ app.on('activate', function () {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
-     mainWindow.loadURL('file://' + __dirname + '/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/index.html');
   }
 });
 

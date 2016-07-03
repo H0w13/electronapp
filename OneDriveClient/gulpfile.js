@@ -7,7 +7,7 @@ var filter = require('gulp-filter');
 var rename = require("gulp-rename");
 
 gulp.task('bower', function () {
-  const f = filter('**/!(jquery*.js)');
+  const f = filter('**/{angular,d3,require,metro.min}.js');
   return gulp.src(mainBowerFiles())
     .pipe(f)
     .pipe(gulp.dest(
@@ -15,17 +15,20 @@ gulp.task('bower', function () {
 });
 
 gulp.task('css', function () {
-  return gulp.src("./bower_components/bootstrap/dist/css/*.min.css")
-    .pipe(concat('external.css'))
+  return gulp.src("./bower_components/metro-dist/css/*.min.css")
+    .pipe(concat('metro.css'))
     .pipe(gulp.dest(
       './app/styles/'));
 });
 
+gulp.task('fonts', function () {
+  return gulp.src("./bower_components/metro-dist/fonts/*")    
+    .pipe(gulp.dest(
+      './app/fonts/'));
+});
+
 gulp.task('jquery', function () {
-  const f = filter('**/jquery*.js');
-  return gulp.src(mainBowerFiles())
-    .pipe(f)
-    .pipe(concat('jquery.all.js'))
+  return gulp.src('./bower_components/jquery/dist/jquery.min.js')
     .pipe(gulp.dest(
       './app/scripts/external/'));
 });
@@ -34,8 +37,8 @@ gulp.task('nodemodules', function () {
     .pipe(gulp.dest(
       './app/scripts/external/'));
 });
-gulp.task('run', ["bower", "css", "jquery", "nodemodules"], function () {
+gulp.task('run', ["bower", "jquery","css", "fonts", "nodemodules"], function () {
   childProcess.spawn(electron, ['./app'], { stdio: 'inherit' });
 });
 
-gulp.task('default', ["bower", "css", "jquery", "nodemodules"], function () { });
+gulp.task('default', ["bower", "jquery","css", "fonts", "nodemodules"], function () { });
