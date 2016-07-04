@@ -8,5 +8,9 @@ define(["onedriveclient"], function (onedriveclient) {
                 });
             });
         });
+
+        $scope.loadSub = function(file){
+            
+        };
     });
 });

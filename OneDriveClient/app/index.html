@@ -17,33 +17,32 @@
 </head>
 
 <body>
-  <div class="grid" ng-app="onedriveclient" ng-controller="root">
+  <div class="grid margin-top-0" ng-app="onedriveclient" ng-controller="root">
     <div class="row" ng-controller="operation">
       <div class="cell app-bar" data-role="appbar">
         <a class="app-bar-element" href="#">OneDrive Client</a>
         <ul class="app-bar-menu">
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Sync</a></li>
-        </ul>       
-      </div>
-    </div>
-    <div class="padding-top-10 row cells4">
-      <div class="cell">
-        <label for="inputFolderPath">Local sync folder:</label>
-      </div>
-      <div class="cell colspan3">
-        <span>{{folderPath}}</span>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Sync</a></li>
+        </ul>
+        <a class="app-bar-element place-right">{{folderPath}}</a>
       </div>
     </div>
     <div class="padding-top-10 row cells4">
       <div class="cell treeview" data-role="treeview" ng-controller="tree">
-        <ul id="tree">
-        </ul>
+        <script id="treeTemplate" type="text/ng-template">       
+          <li>
+            <span class='leaf' ng-click="loadSub(file)"><span ng-if="!file.isDirectory" class='icon mif-file-empty'></span><span ng-if="file.isDirectory" class='icon mif-folder'></span>{{file.name}}</span>
+            <ul ng-if="file.isDirectory" ng-include="'treeTemplate'" ng-repeat="file in file.children"></ul>
+          </li>          
+        </script>
+        <ul ng-include="'treeTemplate'" ng-repeat="file in files"></ul>
       </div>
       <div class="cell colspan3" ng-controller="board">
-        <div>
-          <div ng-class="boardType == 'filelist' ? 'div-btn float-right' : 'div-btn-gray float-right'" ng-click="drawBoard('filelist')"><img src="styles/img/listview.png"></div>
-          <div ng-class="boardType == 'treemap' ? 'div-btn float-right' : 'div-btn-gray float-right'" ng-click="drawBoard('treemap')"><img src="styles/img/treeview.png"></div>
+        <div data-role="group" data-group-type="one-state">
+          <button class="button" ng-click="drawBoard('filelist')">List</button>
+          <button class="button" ng-click="drawBoard('filetable')">Table</button>
+          <button class="button" ng-click="drawBoard('treemap')">SizeMap</button>
         </div>
         <div class="padding-top-10">
           <div id="board"></div>

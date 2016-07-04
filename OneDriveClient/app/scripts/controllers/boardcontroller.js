@@ -8,14 +8,7 @@ define(["onedriveclient"], function (onedriveclient) {
                 name: "flare",
                 children: files
             };
-            requirejs(["jquery"], function ($) {
-                $("#board").empty();
-                $http.get("templates/filelist.html").then(function (result) {
-                    var scope = angular.element(document.getElementById("board")).scope();
-                    var compile = $compile($(result.data))(scope.$new());
-                    $("#board").append(compile);
-                });
-            });
+            $scope.drawBoard($scope.boardType);
         });
         $scope.$on('RefreshBoard', function (event, files) {
             console.log(files);
@@ -27,8 +20,15 @@ define(["onedriveclient"], function (onedriveclient) {
             $scope.boardType = type;
             requirejs(["jquery"], function ($) {
                 $("#board").empty();
-                if ($scope.boardType == 'filelist') {
-                    $http.get("templates/filelist.html").then(function (result) {
+                if ($scope.boardType == 'filetable') {
+                    $http.get("templates/filetable.html").then(function (result) {
+                        var scope = angular.element(document.getElementById("board")).scope();
+                        var compile = $compile($(result.data))(scope.$new());
+                        $("#board").append(compile);
+                    });
+                }
+                else if ($scope.boardType == 'filelist') {
+                    $http.get("templates/filelistview.html").then(function (result) {
                         var scope = angular.element(document.getElementById("board")).scope();
                         var compile = $compile($(result.data))(scope.$new());
                         $("#board").append(compile);

@@ -31,13 +31,12 @@ define(["onedriveclient"], function (onedriveclient) {
 			// 		$scope.$emit("LoadFilesCompleted", files);
 			// 	}
 			// });
+		};
+		$scope.$on('RootInitReady', function (event) {
 			var odurl = $scope.onedriveApiRoot + "/drive/root/children?access_token=" + $scope.authConfig.access_token;
 			onedriveservice.getFolder(odurl, function(items){
 				$scope.$emit("LoadFilesCompleted", items);
 			});
-		};
-		$scope.$on('RootInitReady', function (event) {
-			loadAllFiles();
 		});
 	});
 });

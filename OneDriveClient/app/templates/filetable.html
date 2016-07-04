@@ -9,7 +9,7 @@
         <td><img ng-if="file.isDirectory" src="styles/img/folder.png" width="16px" />
             <img ng-if="!file.isDirectory" src="styles/img/doc.png" width="16px" /></td>
         <td>{{file.name}}</td>
-        <td>{{file.size}}</td>
+        <td>{{file.displaySize}}</td>
         <td>{{file.createDate}}</td>
     </tr>
 </table>
