@@ -1,7 +1,7 @@
 define(["onedriveclient"], function (onedriveclient) {
     onedriveclient.controller("board", function ($scope, $http, chartservice, $compile) {
         $scope.boardType = "filelist";
-        $scope.$on('RootDrawTreeMap', function (event, files) {
+        $scope.$on('RootDrawBoard', function (event, files) {
             $scope.files = files;
             $scope.boardType = "filelist";
             var root = {
@@ -15,6 +15,11 @@ define(["onedriveclient"], function (onedriveclient) {
             $scope.files = files;            
             $scope.drawBoard($scope.boardType);
         });
+
+        $scope.openFile = function(file){
+            if(file.isDirectory)
+                $scope.$emit("LoadFolder", file);
+        };
 
         $scope.drawBoard = function (type) {
             $scope.boardType = type;

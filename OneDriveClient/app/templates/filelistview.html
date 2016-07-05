@@ -2,6 +2,6 @@
     <div class="list" ng-repeat="file in files">
         <img ng-if="file.isDirectory" src="styles/img/folder.png" class="list-icon" />
         <img ng-if="!file.isDirectory" src="styles/img/doc.png" class="list-icon" />
-        <span class="list-title">{{file.name}} {{file.displaySize}}</span>
+        <span class="list-title" ng-click="openFile(file)">{{file.name}} {{file.displaySize}}</span>
     </div>
 </div>

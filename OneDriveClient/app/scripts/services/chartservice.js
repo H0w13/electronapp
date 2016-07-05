@@ -3,13 +3,13 @@ define(["onedriveclient"], function (onedriveclient) {
         this.drawTreeMap = function (root, domid) {
             requirejs(["d3"], function (d3) {
                 var margin = {
-                    top: 40,
+                    top: 0,
                     right: 10,
                     bottom: 10,
-                    left: 10
+                    left: 0
                 },
                     width = 960 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
+                    height = 600 - margin.top - margin.bottom;
 
                 var color = d3.scale.category20c();
 

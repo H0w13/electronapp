@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>One Drive Client</title>
+  <title>OneDrive Client</title>
   <link rel="stylesheet" type="text/css" href="./styles/main.css">
   <link rel="stylesheet" type="text/css" href="./styles/metro.css">
   <script>
@@ -28,7 +28,7 @@
         <a class="app-bar-element place-right">{{folderPath}}</a>
       </div>
     </div>
-    <div class="padding-top-10 row cells4">
+    <div class="row cells6">
       <div class="cell treeview" data-role="treeview" ng-controller="tree">
         <script id="treeTemplate" type="text/ng-template">       
           <li>
@@ -38,7 +38,7 @@
         </script>
         <ul ng-include="'treeTemplate'" ng-repeat="file in files"></ul>
       </div>
-      <div class="cell colspan3" ng-controller="board">
+      <div class="cell colspan5" ng-controller="board">
         <div data-role="group" data-group-type="one-state">
           <button class="button" ng-click="drawBoard('filelist')">List</button>
           <button class="button" ng-click="drawBoard('filetable')">Table</button>

@@ -1,4 +1,4 @@
-<table class="table table-condensed">
+<table class="table striped">
     <tr>
         <th></th>
         <th>File Name</th>
@@ -8,7 +8,7 @@
     <tr ng-repeat="file in files">
         <td><img ng-if="file.isDirectory" src="styles/img/folder.png" width="16px" />
             <img ng-if="!file.isDirectory" src="styles/img/doc.png" width="16px" /></td>
-        <td>{{file.name}}</td>
+        <td ng-click="openFile(file)">{{file.name}}</td>
         <td>{{file.displaySize}}</td>
         <td>{{file.createDate}}</td>
     </tr>
