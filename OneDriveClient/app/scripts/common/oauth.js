@@ -1,5 +1,5 @@
 /** enhanced the oauth library of https://github.com/mawie81/electron-oauth2 */
-
+;
 const Promise = require('pinkie-promise');
 const queryString = require('querystring');
 const fetch = require('node-fetch');

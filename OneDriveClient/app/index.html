@@ -7,13 +7,10 @@
   <title>OneDrive Client</title>
   <link rel="stylesheet" type="text/css" href="./styles/main.css">
   <link rel="stylesheet" type="text/css" href="./styles/metro.css">
-  <script>
-    if (typeof module === 'object') {window.module = module; module = undefined;}
-  </script>
-  <script src="./scripts/external/require.js" data-main="./scripts/libs"></script>
-  <script>
-    if (window.module) module = window.module;
-  </script>
+  <script src="./scripts/external.js"></script>
+  <script src="./scripts/onedriveclient.js"></script>
+  <script src="./scripts/controllers.js"></script>
+  <script src="./scripts/services.js"></script>
 </head>
 
 <body>
@@ -32,8 +29,8 @@
       <div class="cell treeview" data-role="treeview" ng-controller="tree">
         <script id="treeTemplate" type="text/ng-template">       
           <li>
-            <span class='leaf' ng-click="loadSub(file)"><span ng-if="!file.isDirectory" class='icon mif-file-empty'></span><span ng-if="file.isDirectory" class='icon mif-folder'></span>{{file.name}}</span>
-            <ul ng-if="file.isDirectory" ng-include="'treeTemplate'" ng-repeat="file in file.children"></ul>
+            <span class='leaf' ng-click="loadSub(file)"><span class='icon mif-folder'></span>{{file.name}}</span>
+            <ul ng-include="'treeTemplate'" ng-repeat="file in file.children"></ul>
           </li>          
         </script>
         <ul ng-include="'treeTemplate'" ng-repeat="file in files"></ul>
@@ -47,6 +44,13 @@
         <div class="padding-top-10">
           <div id="board"></div>
         </div>
+      </div>
+    </div>
+    <div class="MaskLayer" ng-class="{isClosed : !masked}">
+      <div class="MaskLayer-Content">
+        <p>
+          {{maskMessage}}
+        </p>
       </div>
     </div>
   </div>

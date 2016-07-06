@@ -5,40 +5,65 @@ var concat = require('gulp-concat');
 var mainBowerFiles = require('main-bower-files');
 var filter = require('gulp-filter');
 var rename = require("gulp-rename");
+var es = require('event-stream');
 
-gulp.task('bower', function () {
-  const f = filter('**/{angular,d3,require,metro.min}.js');
-  return gulp.src(mainBowerFiles())
+gulp.task('externaljs', function () {
+  const f = filter('**/{angular,d3,jquery,punycode}.js');
+  return gulp.src(mainBowerFiles().concat(["./node_modules/punycode/punycode.js"]))
     .pipe(f)
+    .pipe(concat('external.js'))
     .pipe(gulp.dest(
-      './app/scripts/external/'));
+      './build/scripts/'));
 });
 
 gulp.task('css', function () {
-  return gulp.src("./bower_components/metro-dist/css/*.min.css")
-    .pipe(concat('metro.css'))
-    .pipe(gulp.dest(
-      './app/styles/'));
+  return es.concat(
+    gulp.src("./bower_components/metro-dist/css/*.min.css")
+      .pipe(concat('metro.css'))
+      .pipe(gulp.dest(
+        './build/styles/')),
+    gulp.src('./app/styles/**/*')
+      .pipe(gulp.dest('./build/styles/'))
+  );
 });
-
 gulp.task('fonts', function () {
-  return gulp.src("./bower_components/metro-dist/fonts/*")    
+  return gulp.src("./bower_components/metro-dist/fonts/*")
     .pipe(gulp.dest(
-      './app/fonts/'));
+      './build/fonts/'));
 });
 
-gulp.task('jquery', function () {
-  return gulp.src('./bower_components/jquery/dist/jquery.min.js')
-    .pipe(gulp.dest(
-      './app/scripts/external/'));
-});
-gulp.task('nodemodules', function () {
-  return gulp.src("./node_modules/punycode/punycode.js")
-    .pipe(gulp.dest(
-      './app/scripts/external/'));
-});
-gulp.task('run', ["bower", "jquery","css", "fonts", "nodemodules"], function () {
-  childProcess.spawn(electron, ['./app'], { stdio: 'inherit' });
+gulp.task('scripts', function () {
+  return es.concat(
+    gulp.src("./app/scripts/common/*.js")
+      .pipe(gulp.dest(
+        './build/scripts/')),
+    gulp.src("./app/scripts/controllers/*.js")
+      .pipe(concat('controllers.js'))
+      .pipe(gulp.dest(
+        './build/scripts/')),
+    gulp.src("./app/scripts/services/*.js")
+      .pipe(concat('services.js'))
+      .pipe(gulp.dest(
+        './build/scripts/')),
+    gulp.src("./app/scripts/*.js")
+      .pipe(gulp.dest(
+        './build/scripts/'))
+  );
 });
 
-gulp.task('default', ["bower", "jquery","css", "fonts", "nodemodules"], function () { });
+gulp.task('app', function () {
+  return es.concat(
+    gulp.src("./app/*")
+      .pipe(gulp.dest(
+        './build/')),
+    gulp.src("./app/templates/*")
+      .pipe(gulp.dest(
+        './build/templates/'))
+  );
+});
+
+gulp.task('run', ["externaljs", "css", "fonts", "scripts", "app"], function () {
+  childProcess.spawn(electron, ['./build'], { stdio: 'inherit' });
+});
+
+gulp.task('default', ["externaljs", "css", "fonts", "scripts", "app"], function () { });

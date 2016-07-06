@@ -21,7 +21,6 @@
   "dependencies": {
     "angular": "^1.5.6",
     "d3": "^3.5.17",
-    "requirejs": "^2.2.0",
     "metro-dist": "^3.0.15"
   }
 }
