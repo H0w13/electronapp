@@ -1,6 +1,5 @@
 //for broadcase events
-;
-onedriveclient.controller("root", function ($scope, onedriveservice) {
+; onedriveclient.controller("root", function ($scope, onedriveservice) {
     $scope.masked = false;
     $scope.maskMessage = "";
 
@@ -14,10 +13,8 @@ onedriveclient.controller("root", function ($scope, onedriveservice) {
             callback(items);
         });
     };
-
     //load configuration
     var config = require("./scripts/config.js");
-    console.log(config);
     $scope.folderPath = config.localfolder;
     $scope.onedriveApiRoot = config.onedriveApiRoot;
     $scope.authConfig = require('electron').remote.getGlobal('config');
@@ -76,14 +73,20 @@ onedriveclient.controller("root", function ($scope, onedriveservice) {
         if (file.downloadUrl) {
             $scope.masked = true;
             $scope.maskMessage = "Downloading......";
-            var http = require('http');
+            var https = require('https');
             var fs = require('fs');
 
             var downloadFile = fs.createWriteStream($scope.folderPath + file.name);
-            var request = http.get(file.downloadUrl, function (response) {
-                response.pipe(downloadFile);
-                $scope.masked = false;
-                $scope.$broadcast("DownloadCompleted", file);
+            https.get(file.downloadUrl, function (response) {
+                response.on('data', function (data) {
+                    console.log("download started");
+                    downloadFile.write(data);
+                }).on('end', function () {
+                    console.log("download end");
+                    downloadFile.end();
+                    $scope.masked = false;
+                    $scope.$broadcast("DownloadCompleted", file);
+                });
             });
         }
         else {

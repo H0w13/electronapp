@@ -6,7 +6,7 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
-const electronOauth2 = require('./scripts/oauth.js');
+const electronOauth2 = require('./scripts/lib/oauth.js');
 
 var config = {
   clientId: '59914024-adca-4947-99f0-7f39ea725a4e',
@@ -26,7 +26,7 @@ function createWindow(windowParams) {
   // Create the browser window.
   mainWindow = new BrowserWindow(windowParams)
 
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

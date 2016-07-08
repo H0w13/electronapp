@@ -7,15 +7,13 @@ var filter = require('gulp-filter');
 var rename = require("gulp-rename");
 var es = require('event-stream');
 
-gulp.task('externaljs', function () {
-  const f = filter('**/{angular,d3,jquery,punycode}.js');
-  return gulp.src(mainBowerFiles().concat(["./node_modules/punycode/punycode.js"]))
+gulp.task('framework', function () {
+  const f = filter('**/{d3,jquery,metro.mini,angular}.js');
+  return gulp.src(mainBowerFiles())
     .pipe(f)
-    .pipe(concat('external.js'))
     .pipe(gulp.dest(
-      './build/scripts/'));
+      './build/scripts/lib/'));
 });
-
 gulp.task('css', function () {
   return es.concat(
     gulp.src("./bower_components/metro-dist/css/*.min.css")
@@ -34,17 +32,17 @@ gulp.task('fonts', function () {
 
 gulp.task('scripts', function () {
   return es.concat(
-    gulp.src("./app/scripts/common/*.js")
-      .pipe(gulp.dest(
-        './build/scripts/')),
     gulp.src("./app/scripts/controllers/*.js")
-      .pipe(concat('controllers.js'))
+      .pipe(concat("controllers.js"))
       .pipe(gulp.dest(
         './build/scripts/')),
     gulp.src("./app/scripts/services/*.js")
-      .pipe(concat('services.js'))
+      .pipe(concat("services.js"))
       .pipe(gulp.dest(
         './build/scripts/')),
+    gulp.src("./app/scripts/lib/*.js")
+      .pipe(gulp.dest(
+        './build/scripts/lib/')),
     gulp.src("./app/scripts/*.js")
       .pipe(gulp.dest(
         './build/scripts/'))
@@ -62,8 +60,8 @@ gulp.task('app', function () {
   );
 });
 
-gulp.task('run', ["externaljs", "css", "fonts", "scripts", "app"], function () {
+gulp.task('run', ["framework", "css", "fonts", "scripts", "app"], function () {
   childProcess.spawn(electron, ['./build'], { stdio: 'inherit' });
 });
 
-gulp.task('default', ["externaljs", "css", "fonts", "scripts", "app"], function () { });
+gulp.task('default', ["framework", "css", "fonts", "scripts", "app"], function () { });

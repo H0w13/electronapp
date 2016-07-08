@@ -1,5 +1,4 @@
-;
-onedriveclient.service('onedriveservice', function () {
+; onedriveclient.service('onedriveservice', function () {
 
 	var updateSize = function (size) {
 		if (size < 1024)
@@ -11,11 +10,11 @@ onedriveclient.service('onedriveservice', function () {
 	};
 
 	this.getFolder = function (url, callback) {
-		var https = require('https');
-		var request = https.get(url, function (response) {
-			response.on('data', (data) => {
+		$.ajax({
+			url: url,
+			dataType: 'json',
+			success: function (data) {
 				if (data) {
-					console.log(data);
 					var items = [];
 					var children = data.children || data.value;
 					if (children && children.length > 0) {
@@ -38,7 +37,7 @@ onedriveclient.service('onedriveservice', function () {
 					}
 					callback(items);
 				}
-			});
+			}
 		});
 	};
 });

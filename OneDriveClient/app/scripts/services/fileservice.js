@@ -1,5 +1,4 @@
-;
-onedriveclient.service('fileservice', function () {
+; onedriveclient.service('fileservice', function () {
 
 	this.getSubItems = function (path, callback) {
 		getLocalFodler(path, callback);
@@ -65,25 +64,25 @@ onedriveclient.service('fileservice', function () {
 			}
 		};
 
-        try {
-            if (fs.statSync(path).isDirectory()) {
-                var files = fs.readdirSync(path);
-                var fObjList = [];
-                for (var i = 0; i < files.length; i++) {
-                    if (!files[i].startsWith(".")) {
-                        var filePath = fObjHelper.combinePath(files[i], path);
-                        var fstat = fs.statSync(filePath);
-                        var fObj = fObjHelper.create(files[i], filePath, fstat);
-                        fObjList.push(fObj);
-                    }
-                }
-                return callback(null, fObjList);
-            }
-            else
-                throw "'" + path + "'' is not a directory"
-        }
-        catch (ex) {
-            callback(ex, null);
-        }
+		try {
+			if (fs.statSync(path).isDirectory()) {
+				var files = fs.readdirSync(path);
+				var fObjList = [];
+				for (var i = 0; i < files.length; i++) {
+					if (!files[i].startsWith(".")) {
+						var filePath = fObjHelper.combinePath(files[i], path);
+						var fstat = fs.statSync(filePath);
+						var fObj = fObjHelper.create(files[i], filePath, fstat);
+						fObjList.push(fObj);
+					}
+				}
+				return callback(null, fObjList);
+			}
+			else
+				throw "'" + path + "'' is not a directory"
+		}
+		catch (ex) {
+			callback(ex, null);
+		}
 	};
 });

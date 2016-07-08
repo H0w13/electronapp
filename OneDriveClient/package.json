@@ -9,24 +9,5 @@
     "gulp-filter": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "main-bower-files": "^2.13.1"
-  },
-  "dependencies": {
-    "ava": "^0.15.2",
-    "nconf": "^0.8.4",
-    "node-fetch": "^1.5.3",
-    "xo": "^0.16.0"
-  },
-  "xo": {
-    "space": true,
-    "rules": {
-      "brace-style": [
-        2,
-        "1tbs",
-        {
-          "allowSingleLine": true
-        }
-      ],
-      "camelcase": 0
-    }
   }
 }

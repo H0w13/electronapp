@@ -1,5 +1,4 @@
-;
-onedriveclient.controller("board", function ($scope, $http, chartservice, $compile) {
+; onedriveclient.controller("board", function ($scope, $http, chartservice, $compile) {
     $scope.boardType = "filelist";
     $scope.$on('RootDrawBoard', function (event, files) {
         $scope.files = files;
@@ -16,7 +15,6 @@ onedriveclient.controller("board", function ($scope, $http, chartservice, $compi
     });
 
     $scope.openFile = function (file) {
-        console.log(file);
         if (file.isDirectory)
             $scope.$emit("LoadFolder", file);
         else
@@ -25,7 +23,7 @@ onedriveclient.controller("board", function ($scope, $http, chartservice, $compi
 
     $scope.drawBoard = function (type) {
         $scope.boardType = type;
-        //$("#board").empty();
+        $("#board").empty();
         if ($scope.boardType == 'filetable') {
             $http.get("templates/filetable.html").then(function (result) {
                 var scope = angular.element(document.getElementById("board")).scope();

@@ -1,5 +1,4 @@
-;
-onedriveclient.service('chartservice', function () {
+; onedriveclient.service('chartservice', function () {
     this.drawTreeMap = function (root, domid) {
         var margin = {
             top: 0,
