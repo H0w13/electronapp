@@ -76,16 +76,17 @@
             var https = require('https');
             var fs = require('fs');
 
-            var downloadFile = fs.createWriteStream($scope.folderPath + file.name);
+            var downloadFile = fs.createWriteStream($scope.folderPath + decodeURIComponent(file.path));
             https.get(file.downloadUrl, function (response) {
                 response.on('data', function (data) {
                     console.log("download started");
                     downloadFile.write(data);
                 }).on('end', function () {
-                    console.log("download end");
                     downloadFile.end();
-                    $scope.masked = false;
-                    $scope.$broadcast("DownloadCompleted", file);
+                    $scope.$apply(function () {
+                        $scope.masked = false;
+                        $scope.$broadcast("DownloadCompleted", file);
+                    });
                 });
             });
         }

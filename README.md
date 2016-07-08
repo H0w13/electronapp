@@ -1,3 +1,4 @@
 # Electron Apps
-Applications built with [Electron](http://electron.atom.io/)
-* OneDrive client (in progress)
+Applications to play with [Electron](http://electron.atom.io/)
+* OneDrive client
+  - jQuery, AngularJS, d3

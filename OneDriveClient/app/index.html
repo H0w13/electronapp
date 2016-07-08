@@ -13,8 +13,8 @@
   <script src="./scripts/services.js"></script>
 </head>
 
-<body>
-  <div class="grid margin-top-0" ng-app="onedriveclient" ng-controller="root">
+<body ng-app="onedriveclient" ng-controller="root">
+  <div class="grid margin-top-0">
     <div class="row" ng-controller="operation">
       <div class="cell app-bar" data-role="appbar">
         <a class="app-bar-element" href="#">OneDrive Client</a>
@@ -46,13 +46,9 @@
         </div>
       </div>
     </div>
-    <div class="MaskLayer" ng-class="{isClosed : !masked}">
-      <div class="MaskLayer-Content">
-        <p>
-          {{maskMessage}}
-        </p>
-      </div>
-    </div>
+  </div>
+  <div class="MaskLayer" ng-if="masked">
+    <div class="MaskLayer-Content" data-role="preloader" data-type="ring"></div>
   </div>
 </body>
 
