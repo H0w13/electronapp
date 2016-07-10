@@ -1,5 +1,5 @@
 //for broadcase events
-; onedriveclient.controller("root", function ($scope, onedriveservice) {
+; onedriveclient.controller("root", function ($scope, onedriveservice, fileservice) {
     $scope.masked = false;
     $scope.maskMessage = "";
 
@@ -13,19 +13,27 @@
             callback(items);
         });
     };
+    var mergeFiles = function(local, remote){
+        var result = [];
+        
+    }
     //load configuration
     var config = require("./scripts/config.js");
     $scope.folderPath = config.localfolder;
     $scope.onedriveApiRoot = config.onedriveApiRoot;
     $scope.authConfig = require('electron').remote.getGlobal('config');
-    getSub("", function (files) {
-        for (var i = 0; i < files.length; i++) {
-            files[i].path = "/" + encodeURIComponent(files[i].name);
-        }
-        $scope.rootFiles = files;
-        $scope.$broadcast("RootDrawBoard", files);
-        $scope.$broadcast("RootDrawTree", files);
-    })
+    fileservice.getAllSubFiles($scope.folderPath, function(localFiles){
+        getSub("", function (files) {
+                for (var i = 0; i < files.length; i++) {
+                    files[i].path = "/" + encodeURIComponent(files[i].name);
+                }
+                var finalFiles = mergeFiles(localFiles, files);
+                $scope.rootFiles = finalFiles;
+                $scope.$broadcast("RootDrawBoard", finalFiles);
+                $scope.$broadcast("RootDrawTree", finalFiles);
+            })
+    });
+    
 
     $scope.$on('LoadFolder', function (event, folder) {
         if (folder.isLoaded) {
@@ -73,21 +81,11 @@
         if (file.downloadUrl) {
             $scope.masked = true;
             $scope.maskMessage = "Downloading......";
-            var https = require('https');
-            var fs = require('fs');
-
-            var downloadFile = fs.createWriteStream($scope.folderPath + decodeURIComponent(file.path));
-            https.get(file.downloadUrl, function (response) {
-                response.on('data', function (data) {
-                    console.log("download started");
-                    downloadFile.write(data);
-                }).on('end', function () {
-                    downloadFile.end();
-                    $scope.$apply(function () {
+            onedriveservice.downloadFile(file.downloadUrl, $scope.folderPath + decodeURIComponent(file.path), function(){
+                $scope.$apply(function () {
                         $scope.masked = false;
                         $scope.$broadcast("DownloadCompleted", file);
                     });
-                });
             });
         }
         else {

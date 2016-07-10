@@ -1,4 +1,6 @@
 ; onedriveclient.service('fileservice', function () {
+	var fs = require('fs');
+	var fileModel = require("./models/file.js");
 
 	this.getSubItems = function (path, callback) {
 		getLocalFodler(path, callback);
@@ -20,7 +22,7 @@
 			}
 		});
 	};
-	this.getAllSubFiles = function (path) {
+	this.getAllSubFiles = function (path, callback) {
 		getLocalFodler(path, function (err, files) {
 			if (err)
 				throw err;
@@ -30,23 +32,15 @@
 						files[i].children = getNextLevel(files[i].path, files[i], 1);
 					}
 				}
-				$scope.$emit("LoadFilesCompleted", files);
+				callback(files);
 			}
 		});
 	};
 	var getLocalFodler = function (path, callback) {
-		var fs = require('fs');
-
 		var fObjHelper = {
 			create: function (name, path, stats) {
-				var fObj = {
-					name: name,
-					path: path,
-					size: stats.size,
-					createDate: stats.ctime,
-					updateDate: stats.mtime,
-					isDirectory: stats.isDirectory()
-				};
+				var fObj = fileModel(name, path, stats.size, stats.ctime, stats.isDirectory());
+				fObj.isSynced = -1;
 				return fObj;
 			},
 			combinePath: function (filename, directory) {
