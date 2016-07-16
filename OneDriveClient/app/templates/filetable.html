@@ -6,8 +6,7 @@
         <th>Created Date</th>
     </tr>
     <tr ng-repeat="file in files">
-        <td><span ng-if="file.isDirectory" class='list-icon mif-folder fg-blue'></span>
-            <span ng-if="!file.isDirectory" class='list-icon mif-file-empty fg-red'></span></td>
+        <td><span ng-class='file.iconStyle'></span></td>
         <td ng-click="openFile(file)">{{file.name}}</td>
         <td>{{file.displaySize}}</td>
         <td>{{file.createDate}}</td>

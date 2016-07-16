@@ -1,7 +1,6 @@
 <div class="listview list-type-tiles">
     <div class="list" ng-repeat="file in files">
-        <span ng-if="file.isDirectory" class='list-icon mif-folder fg-blue'></span>
-        <span ng-if="!file.isDirectory" class='list-icon mif-file-empty fg-red'></span>
+        <span class="{{file.iconStyle}}"></span>
         <span class="list-title" ng-click="openFile(file)">{{file.name}} {{file.displaySize}}</span>
     </div>
 </div>

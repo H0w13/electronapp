@@ -43,6 +43,9 @@ gulp.task('scripts', function () {
     gulp.src("./app/scripts/lib/*.js")
       .pipe(gulp.dest(
         './build/scripts/lib/')),
+    gulp.src("./app/scripts/models/*.js")
+      .pipe(gulp.dest(
+        './build/scripts/models/')),
     gulp.src("./app/scripts/*.js")
       .pipe(gulp.dest(
         './build/scripts/'))

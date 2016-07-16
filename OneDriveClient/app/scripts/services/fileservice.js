@@ -1,6 +1,6 @@
 ; onedriveclient.service('fileservice', function () {
 	var fs = require('fs');
-	var fileModel = require("./models/file.js");
+	var fileModel = require("./scripts/models/file.js");
 
 	this.getSubItems = function (path, callback) {
 		getLocalFodler(path, callback);

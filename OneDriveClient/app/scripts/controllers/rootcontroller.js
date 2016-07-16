@@ -13,27 +13,48 @@
             callback(items);
         });
     };
-    var mergeFiles = function(local, remote){
-        var result = [];
-        
+    var mergeFiles = function (local, remote) {
+        if (remote && remote.length > 0) {
+            if (!local) {
+                local = remote;
+                return;
+            }
+            for (var i = 0; i < remote.length; i++) {
+                var found = false;
+                for (var j = 0; j < local.length; j++) {
+                    if (local[j].name == remote[i].name) {
+                        found = true;
+                        if (local[j].isDirectory) {
+                            mergeFiles(local[j].children, remote[i].children);
+                        }
+                        else
+                            local[j].isSynced = 1;
+                        break;
+                    }
+                }
+                if (!found) {
+                    local.push(remote[i]);
+                }
+            }
+        }
     }
     //load configuration
     var config = require("./scripts/config.js");
     $scope.folderPath = config.localfolder;
     $scope.onedriveApiRoot = config.onedriveApiRoot;
     $scope.authConfig = require('electron').remote.getGlobal('config');
-    fileservice.getAllSubFiles($scope.folderPath, function(localFiles){
+    fileservice.getAllSubFiles($scope.folderPath, function (localFiles) {
         getSub("", function (files) {
-                for (var i = 0; i < files.length; i++) {
-                    files[i].path = "/" + encodeURIComponent(files[i].name);
-                }
-                var finalFiles = mergeFiles(localFiles, files);
-                $scope.rootFiles = finalFiles;
-                $scope.$broadcast("RootDrawBoard", finalFiles);
-                $scope.$broadcast("RootDrawTree", finalFiles);
-            })
+            for (var i = 0; i < files.length; i++) {
+                files[i].path = "/" + encodeURIComponent(files[i].name);
+            }
+            mergeFiles(localFiles, files);
+            $scope.rootFiles = localFiles;
+            $scope.$broadcast("RootDrawBoard", localFiles);
+            $scope.$broadcast("RootDrawTree", localFiles);
+        })
     });
-    
+
 
     $scope.$on('LoadFolder', function (event, folder) {
         if (folder.isLoaded) {
@@ -69,7 +90,7 @@
             for (var i = 0; i < $scope.rootFiles.length; i++) {
                 var node = getNodeByPath($scope.rootFiles[i], folder.path);
                 if (node) {
-                    node.children = files;
+                    mergeFiles(node.children, files);
                     node.isLoaded = true;
                 }
             }
@@ -81,11 +102,11 @@
         if (file.downloadUrl) {
             $scope.masked = true;
             $scope.maskMessage = "Downloading......";
-            onedriveservice.downloadFile(file.downloadUrl, $scope.folderPath + decodeURIComponent(file.path), function(){
+            onedriveservice.downloadFile(file.downloadUrl, $scope.folderPath + decodeURIComponent(file.path), function () {
                 $scope.$apply(function () {
-                        $scope.masked = false;
-                        $scope.$broadcast("DownloadCompleted", file);
-                    });
+                    $scope.masked = false;
+                    $scope.$broadcast("DownloadCompleted", file);
+                });
             });
         }
         else {

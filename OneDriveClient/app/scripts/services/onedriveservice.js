@@ -1,7 +1,7 @@
 ; onedriveclient.service('onedriveservice', function () {
 
 	this.getFolder = function (url, callback) {
-		var fileModel = require("./models/file.js");
+		var fileModel = require("./scripts/models/file.js");
 		$.ajax({
 			url: url,
 			dataType: 'json',

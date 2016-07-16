@@ -26,7 +26,7 @@ function createWindow(windowParams) {
   // Create the browser window.
   mainWindow = new BrowserWindow(windowParams)
 
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
