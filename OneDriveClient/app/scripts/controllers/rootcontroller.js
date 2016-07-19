@@ -28,7 +28,7 @@
                             mergeFiles(local[j].children, remote[i].children);
                         }
                         else
-                            local[j].isSynced = 1;
+                            local[j].updateStatus(1);
                         break;
                     }
                 }
@@ -57,7 +57,7 @@
 
 
     $scope.$on('LoadFolder', function (event, folder) {
-        if (folder.isLoaded) {
+        if (folder.isLoaded || folder.isSynced != 0) {
             $scope.$broadcast("RefreshBoard", folder.children);
             $scope.$broadcast("RootDrawTree", $scope.rootFiles);
             return;

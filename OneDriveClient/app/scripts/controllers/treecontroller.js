@@ -4,6 +4,8 @@
     });
 
     $scope.loadSub = function (file) {
-        $scope.$emit("LoadFolder", file);
+        if (file.isDirectory) {
+            $scope.$emit("LoadFolder", file);
+        }
     };
 });

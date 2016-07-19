@@ -9,7 +9,7 @@ module.exports = function (name, path, size, createDate, isDirectory) {
             return Math.round(size / (1024 * 1024)) + "M";
     };
 
-    return {
+    var obj = {
         name: name,
         isDirectory: isDirectory,
         createDate: createDate,
@@ -19,22 +19,25 @@ module.exports = function (name, path, size, createDate, isDirectory) {
         path: path,
         downloadUrl: "",
         hashcode: undefined,
-        isSynced: -1, //-1 local, 0 remote, 1 synced
-        iconStyle: function () {
-            if (this.isDirectory)
-                return "list-icon mif-folder fg-blue";
-            else {
-                switch (this.isSynced) {
-                    case -1:
-                        return "list-icon mif-file-empty fg-red";
-                    case 0:
-                        return "list-icon mif-file-empty fg-blue";
-                    case 1:
-                        return "list-icon mif-file-empty fg-green";
-                    default:
-                        return "list-icon mif-file-empty";
-                }
+        //-1 local, 0 remote, 1 synced
+        isSynced: -1,
+        iconStyle: isDirectory ? "list-icon mif-folder fg-blue" : "list-icon mif-file-empty"
+    };
+    obj.updateStatus = function (status) {
+        obj.isSynced = status;
+        if (!obj.isDirectory) {
+            switch (status) {
+                case -1:
+                    obj.iconStyle = "list-icon mif-file-empty fg-red";
+                    break;
+                case 0:
+                    obj.iconStyle = "list-icon mif-file-empty fg-blue";
+                    break;
+                case 1:
+                    obj.iconStyle = "list-icon mif-file-empty fg-green";
+                    break;
             }
         }
     };
+    return obj;
 };

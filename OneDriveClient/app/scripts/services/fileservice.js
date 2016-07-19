@@ -40,7 +40,7 @@
 		var fObjHelper = {
 			create: function (name, path, stats) {
 				var fObj = fileModel(name, path, stats.size, stats.ctime, stats.isDirectory());
-				fObj.isSynced = -1;
+				fObj.updateStatus(-1);
 				return fObj;
 			},
 			combinePath: function (filename, directory) {

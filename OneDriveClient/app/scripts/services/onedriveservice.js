@@ -12,7 +12,7 @@
 					if (children && children.length > 0) {
 						$.each(children, function (i, item) {
 							var it = fileModel(item.name, "", item.size, item.createdDateTime, item.folder !== undefined);							
-							it.isSynced = 0;							
+							it.updateStatus(0);							
 							if (item.file) {
 								it.downloadUrl = item['@content.downloadUrl'];
 								it.hashcode = item.file.hashes;

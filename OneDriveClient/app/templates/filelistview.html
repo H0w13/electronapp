@@ -1,6 +1,6 @@
 <div class="listview list-type-tiles">
     <div class="list" ng-repeat="file in files">
-        <span class="{{file.iconStyle}}"></span>
+        <span ng-class="file.iconStyle"></span>
         <span class="list-title" ng-click="openFile(file)">{{file.name}} {{file.displaySize}}</span>
     </div>
 </div>
