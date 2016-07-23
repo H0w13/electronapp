@@ -11,7 +11,7 @@
 					var children = data.children || data.value;
 					if (children && children.length > 0) {
 						$.each(children, function (i, item) {
-							var it = fileModel(item.name, "", item.size, item.createdDateTime, item.folder !== undefined);							
+							var it = fileModel(item.name, "", "", item.size, item.createdDateTime, item.folder !== undefined);							
 							it.updateStatus(0);							
 							if (item.file) {
 								it.downloadUrl = item['@content.downloadUrl'];
@@ -29,7 +29,7 @@
 	this.downloadFile = function (url, localPath, callback) {
 		var https = require('https');
 		var fs = require('fs');
-
+		//check directory exists
 		var downloadFile = fs.createWriteStream(localPath);
 		https.get(file.downloadUrl, function (response) {
 			response.on('data', function (data) {

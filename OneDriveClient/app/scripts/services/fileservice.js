@@ -1,20 +1,20 @@
 ; onedriveclient.service('fileservice', function () {
 	var fs = require('fs');
 	var fileModel = require("./scripts/models/file.js");
-
+	var fObjHelper = require("./scripts/lib/fileObjHelper.js");
 	this.getSubItems = function (path, callback) {
-		getLocalFodler(path, callback);
+		getLocalFolder(path, callback);
 	};
 
 	var getNextLevel = function (path, node, level) {
-		getLocalFodler(path, function (err, files) {
+		getLocalFolder(path, function (err, files) {
 			if (err)
 				throw err;
 			else {
 				var nodes = [];
 				for (var i = 0; i < files.length; i++) {
 					if (files[i].isDirectory) {
-						getNextLevel(files[i].path, files[i], level + 1);
+						getNextLevel(files[i].localPath, files[i], level + 1);
 					}
 					nodes.push(files[i]);
 				}
@@ -23,41 +23,20 @@
 		});
 	};
 	this.getAllSubFiles = function (path, callback) {
-		getLocalFodler(path, function (err, files) {
+		getLocalFolder(path, function (err, files) {
 			if (err)
 				throw err;
 			else {
 				for (var i = 0; i < files.length; i++) {
 					if (files[i].isDirectory) {
-						files[i].children = getNextLevel(files[i].path, files[i], 1);
+						getNextLevel(files[i].localPath, files[i], 1);
 					}
 				}
 				callback(files);
 			}
 		});
 	};
-	var getLocalFodler = function (path, callback) {
-		var fObjHelper = {
-			create: function (name, path, stats) {
-				var fObj = fileModel(name, path, stats.size, stats.ctime, stats.isDirectory());
-				fObj.updateStatus(-1);
-				return fObj;
-			},
-			combinePath: function (filename, directory) {
-				if (directory.startsWith('/')) {
-					//guess it is posix system
-					if (directory.endsWith('/'))
-						return directory + filename;
-					else
-						return directory + '/' + filename;
-				}
-				else {
-					//guess it is nt system
-					return directory + '\\' + filename;
-				}
-			}
-		};
-
+	var getLocalFolder = function (path, callback) {
 		try {
 			if (fs.statSync(path).isDirectory()) {
 				var files = fs.readdirSync(path);

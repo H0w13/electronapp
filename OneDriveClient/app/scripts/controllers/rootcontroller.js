@@ -2,14 +2,25 @@
 ; onedriveclient.controller("root", function ($scope, onedriveservice, fileservice) {
     $scope.masked = false;
     $scope.maskMessage = "";
+    var fObjHelper = require("./scripts/lib/fileObjHelper.js");
 
     $scope.$on('SwitchPath', function (event, files) {
         $scope.$broadcast("RefreshBoard", files);
     });
 
-    var getSub = function (path, callback) {
-        var odurl = $scope.onedriveApiRoot + "/drive/root:" + path + ":/children?access_token=" + $scope.authConfig.access_token;
+    var getSub = function (folder, callback) {
+        var remotePath = "";
+        var localPath = $scope.folderPath;
+        if (folder) {
+            remotePath = folder.remotePath;
+            localPath = folder.localPath;
+        }
+        var odurl = $scope.onedriveApiRoot + "/drive/root:" + remotePath + ":/children?access_token=" + $scope.authConfig.access_token;
         onedriveservice.getFolder(odurl, function (items) {
+            for (var i = 0; i < items.length; i++) {
+                items[i].localPath = fObjHelper.combinePath(items[i].name, localPath);
+                items[i].remotePath = remotePath + "/" + encodeURIComponent(items[i].name);
+            }
             callback(items);
         });
     };
@@ -27,8 +38,11 @@
                         if (local[j].isDirectory) {
                             mergeFiles(local[j].children, remote[i].children);
                         }
-                        else
+                        else {
+                            local[j].remotePath = remote[i].remotePath;
                             local[j].updateStatus(1);
+
+                        }
                         break;
                     }
                 }
@@ -44,35 +58,24 @@
     $scope.onedriveApiRoot = config.onedriveApiRoot;
     $scope.authConfig = require('electron').remote.getGlobal('config');
     fileservice.getAllSubFiles($scope.folderPath, function (localFiles) {
-        getSub("", function (files) {
-            for (var i = 0; i < files.length; i++) {
-                files[i].path = "/" + encodeURIComponent(files[i].name);
-            }
+        getSub(null, function (files) {
             mergeFiles(localFiles, files);
             $scope.rootFiles = localFiles;
             $scope.$broadcast("RootDrawBoard", localFiles);
-            $scope.$broadcast("RootDrawTree", localFiles);
-        })
+        });
     });
-
 
     $scope.$on('LoadFolder', function (event, folder) {
         if (folder.isLoaded || folder.isSynced != 0) {
             $scope.$broadcast("RefreshBoard", folder.children);
-            $scope.$broadcast("RootDrawTree", $scope.rootFiles);
             return;
         }
-        getSub(folder.path, function (files) {
-            for (var i = 0; i < files.length; i++) {
-                files[i].path = folder.path + "/" + encodeURIComponent(files[i].name);
-            }
-            $scope.$broadcast("RefreshBoard", files);
-
+        getSub(folder, function (files) {
             var getNodeByPath = function (folder, nodePath) {
                 if (folder.isDirectory) {
-                    if (folder.path == nodePath)
+                    if (folder.remotePath == nodePath)
                         return folder;
-                    else if (nodePath.startsWith(folder.path)) {
+                    else if (nodePath.startsWith(folder.remotePath)) {
                         if (folder.children && folder.children.length > 0) {
                             for (var i = 0; i < folder.children.length; i++) {
                                 var node = getNodeByPath(folder.children[i], nodePath);
@@ -88,12 +91,13 @@
                 return undefined;
             };
             for (var i = 0; i < $scope.rootFiles.length; i++) {
-                var node = getNodeByPath($scope.rootFiles[i], folder.path);
+                var node = getNodeByPath($scope.rootFiles[i], folder.remotePath);
                 if (node) {
                     mergeFiles(node.children, files);
                     node.isLoaded = true;
                 }
             }
+            $scope.$broadcast("RefreshBoard", files);
             $scope.$broadcast("RootDrawTree", $scope.rootFiles);
         })
     });
@@ -102,7 +106,7 @@
         if (file.downloadUrl) {
             $scope.masked = true;
             $scope.maskMessage = "Downloading......";
-            onedriveservice.downloadFile(file.downloadUrl, $scope.folderPath + decodeURIComponent(file.path), function () {
+            onedriveservice.downloadFile(file.downloadUrl, file.localPath, function () {
                 $scope.$apply(function () {
                     $scope.masked = false;
                     $scope.$broadcast("DownloadCompleted", file);

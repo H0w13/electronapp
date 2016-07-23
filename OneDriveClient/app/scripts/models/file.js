@@ -1,5 +1,5 @@
 ;
-module.exports = function (name, path, size, createDate, isDirectory) {
+module.exports = function (name, localPath, remotePath, size, createDate, isDirectory) {
     var updateSize = function (size) {
         if (size < 1024)
             return size + "B";
@@ -16,13 +16,16 @@ module.exports = function (name, path, size, createDate, isDirectory) {
         size: size,
         displaySize: updateSize(size),
         isLoaded: false,
-        path: path,
+        localPath: localPath,
+        remotePath: remotePath,
         downloadUrl: "",
         hashcode: undefined,
         //-1 local, 0 remote, 1 synced
         isSynced: -1,
         iconStyle: isDirectory ? "list-icon mif-folder fg-blue" : "list-icon mif-file-empty"
     };
+    if(isDirectory)
+        obj.children = [];
     obj.updateStatus = function (status) {
         obj.isSynced = status;
         if (!obj.isDirectory) {
