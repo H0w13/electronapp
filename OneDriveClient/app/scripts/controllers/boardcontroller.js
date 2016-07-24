@@ -16,7 +16,11 @@
 
     $scope.openFile = function (file) {
         if (file.isDirectory)
-            $scope.$emit("LoadFolder", file);        
+            $scope.$emit("LoadFolder", file);
+        else (!file.isDirectory && file.isSynced == 0)
+        {
+            $scope.$emit("SyncFile", file);
+        }
     };
 
     $scope.drawBoard = function (type) {

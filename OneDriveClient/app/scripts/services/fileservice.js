@@ -1,5 +1,6 @@
 ; onedriveclient.service('fileservice', function () {
 	var fs = require('fs');
+	var nodePath = require('path');
 	var fileModel = require("./scripts/models/file.js");
 	var fObjHelper = require("./scripts/lib/fileObjHelper.js");
 	this.getSubItems = function (path, callback) {
@@ -57,5 +58,22 @@
 		catch (ex) {
 			callback(ex, null);
 		}
+	};
+
+	this.createFile = function (filepath) {
+		var folderPath = nodePath.dirname(filepath);
+		if (folderPath) {
+			var mkdirs = function (dirpath) {
+				try {
+					fs.accessSync(dirpath);
+				}
+				catch (e) {
+					mkdirs(nodePath.dirname(dirpath));
+					fs.mkdirSync(dirpath);
+				}
+			};
+			mkdirs(folderPath)
+		}
+		return fs.createWriteStream(filepath);
 	};
 });

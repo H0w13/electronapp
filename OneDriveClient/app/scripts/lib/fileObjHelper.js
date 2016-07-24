@@ -18,5 +18,24 @@ module.exports = {
             //guess it is nt system
             return directory + '\\' + filename;
         }
+    },
+    mergeFiles: function (local, remote) {
+        if (!local)
+            return remote;
+        if (remote) {
+            if (local.name == remote.name && local.isDirectory == remote.isDirectory) {
+                local.remotePath = remote.remotePath;
+                local.downloadUrl = remote.downloadUrl;
+                local.hashcode = remote.hashcode;
+                if (local.createDate == remote.createDate && local.size == remote.size)
+                    local.updateStatus(1);
+                else {
+                    local.createDate = remote.createDate;
+                    local.size = remote.size;
+                    local.updateStatus(0);
+                }
+            }
+        }
+        return local;
     }
 };

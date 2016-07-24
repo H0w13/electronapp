@@ -26,16 +26,13 @@
 		});
 	};
 
-	this.downloadFile = function (url, localPath, callback) {
+	this.downloadFile = function (url, stream, callback) {
 		var https = require('https');
-		var fs = require('fs');
-		//check directory exists
-		var downloadFile = fs.createWriteStream(localPath);
-		https.get(file.downloadUrl, function (response) {
+		https.get(url, function (response) {
 			response.on('data', function (data) {
-				downloadFile.write(data);
+				stream.write(data);
 			}).on('end', function () {
-				downloadFile.end();
+				stream.end();
 				callback();
 			});
 		});

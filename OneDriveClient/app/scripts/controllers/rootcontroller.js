@@ -39,9 +39,7 @@
                             mergeFiles(local[j].children, remote[i].children);
                         }
                         else {
-                            local[j].remotePath = remote[i].remotePath;
-                            local[j].updateStatus(1);
-
+                            local[j] = fObjHelper.mergeFiles(local[j], remote[i]);
                         }
                         break;
                     }
@@ -95,6 +93,7 @@
                 if (node) {
                     mergeFiles(node.children, files);
                     node.isLoaded = true;
+                    break;
                 }
             }
             $scope.$broadcast("RefreshBoard", files);
@@ -106,9 +105,11 @@
         if (file.downloadUrl) {
             $scope.masked = true;
             $scope.maskMessage = "Downloading......";
-            onedriveservice.downloadFile(file.downloadUrl, file.localPath, function () {
+            var fileStream = fileservice.createFile(file.localPath);
+            onedriveservice.downloadFile(file.downloadUrl, fileStream, function () {
                 $scope.$apply(function () {
                     $scope.masked = false;
+                    file.updateStatus(1);
                     $scope.$broadcast("DownloadCompleted", file);
                 });
             });
