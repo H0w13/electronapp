@@ -24,32 +24,6 @@
             callback(items);
         });
     };
-    var mergeFiles = function (local, remote) {
-        if (remote && remote.length > 0) {
-            if (!local) {
-                local = remote;
-                return;
-            }
-            for (var i = 0; i < remote.length; i++) {
-                var found = false;
-                for (var j = 0; j < local.length; j++) {
-                    if (local[j].name == remote[i].name) {
-                        found = true;
-                        if (local[j].isDirectory) {
-                            mergeFiles(local[j].children, remote[i].children);
-                        }
-                        else {
-                            local[j] = fObjHelper.mergeFiles(local[j], remote[i]);
-                        }
-                        break;
-                    }
-                }
-                if (!found) {
-                    local.push(remote[i]);
-                }
-            }
-        }
-    }
     //load configuration
     var config = require("./scripts/config.js");
     $scope.folderPath = config.localfolder;
@@ -57,7 +31,7 @@
     $scope.authConfig = require('electron').remote.getGlobal('config');
     fileservice.getAllSubFiles($scope.folderPath, function (localFiles) {
         getSub(null, function (files) {
-            mergeFiles(localFiles, files);
+            fObjHelper.mergeFiles(localFiles, files);
             $scope.rootFiles = localFiles;
             $scope.$broadcast("RootDrawBoard", localFiles);
         });
@@ -91,7 +65,7 @@
             for (var i = 0; i < $scope.rootFiles.length; i++) {
                 var node = getNodeByPath($scope.rootFiles[i], folder.remotePath);
                 if (node) {
-                    mergeFiles(node.children, files);
+                    fObjHelper.mergeFiles(node.children, files);
                     node.isLoaded = true;
                     break;
                 }

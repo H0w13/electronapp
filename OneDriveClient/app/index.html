@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-  <div class="MaskLayer" ng-if="masked">
+  <div ng-class="{'MaskLayer': true, 'MaskLayerClosed': !masked}">
     <div class="MaskLayer-Content" data-role="preloader" data-type="ring"></div>
   </div>
 </body>

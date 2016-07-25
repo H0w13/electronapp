@@ -56,7 +56,7 @@
     transition: opacity linear 0.25s;
     pointer-events: auto;
 }
-.MaskLayer.isClosed {
+.MaskLayerClosed {
     opacity: 0 !important;
     pointer-events: none !important;
 }
