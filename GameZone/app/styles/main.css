@@ -1,0 +1,19 @@
+.margin-top-0{
+  margin-top: 0px !important;
+}
+
+.margin-bottom-0{
+  margin-bottom: 0px !important;
+}
+
+.padding-top-10{
+  padding-top: 10px !important;
+}
+
+.border-0{
+    border: 0px !important;
+}
+
+.border-1{
+    border: 1px #000 solid !important;
+}

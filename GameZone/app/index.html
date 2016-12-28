@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Game Zone</title>
+    <link rel="stylesheet" type="text/css" href="./styles/main.css">
+    <link rel="stylesheet" type="text/css" href="./styles/game.css">
+    <link rel="stylesheet" type="text/css" href="./styles/metro.css">
+    <script src="./scripts/lib/angular.js"></script>
+    <script src="./scripts/gamezone.js"></script>
+    <script src="./scripts/controllers.js"></script>
+    <script src="./scripts/services.js"></script>
+</head>
+
+<body ng-app="gamezone" ng-controller="root">
+    <div class="grid margin-top-0">
+        <div class="row margin-bottom-0">
+            <div class="cell app-bar" data-role="appbar">
+                <a class="app-bar-element" href="#">Game Zone</a>
+            </div>
+        </div>
+        <div class="row cells5">
+            <div class="cell">
+                <ul class="sidebar2 dark border-0">
+                    <li class="title">Board Games</li>
+                    <li ng-repeat="game in gamelist"><a href="#" ng-click="loadGame(game.Name)">{{game.Title}}</a></li>
+                </ul>
+            </div>
+            <div class="cell colspan4" ng-controller="board">
+                <div class="padding-top-10">
+                    <div id="board"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
