@@ -1,5 +1,39 @@
 .blackbox-cell{
-    border: 1px #000 solid !important;
+    border: 1px #000 solid;
     margin: 0px !important;
     padding: 0px !important;
+    height: 50px;
+    width: 50px;
+}
+
+.blackbox-cell-topleft{
+    border-top-width: 0px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 0px;  
+}
+
+.blackbox-cell-topright{
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;  
+}
+
+.blackbox-cell-bottomleft{
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;    
+}
+
+.blackbox-cell-bottomright{
+    border-top-width: 1px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 1px;      
+}
+
+.blackbox-cell-edge{
+    background-color: grey;
 }

@@ -1,4 +1,4 @@
-; gamezone.controller("board", function ($scope, $http, $compile) {
+; gamezone.controller("board", function ($scope, $http, $compile, gameservice) {
     $scope.$on('LoadGame', function (event, gamename) {
         $scope.gamename = gamename;
         $scope.drawBoard($scope.gamename);
@@ -9,6 +9,8 @@
             var scope = angular.element(document.getElementById("board")).scope();
             var compile = $compile(result.data)(scope.$new());
             $("#board").append(compile);
+
+            gameservice.initGame(gamename);
         });
         
     };
