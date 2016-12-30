@@ -22,7 +22,12 @@ module.exports = (function () {
             var nextCell = null;
             var newDirection = direction;
             if (direction == constant.MoveDirection.RIGHT) {
-                if (blackbox.board[x][y + 1].isSysMarked) {
+                if (blackbox.board[x - 1][y + 1].isSysMarked && blackbox.board[x + 1][y + 1].isSysMarked) {
+                    blackbox.board[x][y].lineType = constant.LineType.RETURN_LEFT;
+                    nextCell = blackbox.board[x][y - 1];
+                    newDirection = constant.MoveDirection.RETURN_LEFT;
+                }
+                else if (blackbox.board[x][y + 1].isSysMarked) {
                     blackbox.board[x][y].lineType |= constant.LineType.HORIZONTAL;
                     nextCell = blackbox.board[x][y + 1];
                 }
@@ -42,7 +47,12 @@ module.exports = (function () {
                 }
             }
             else if (direction == constant.MoveDirection.LEFT) {
-                if (blackbox.board[x][y - 1].isSysMarked) {
+                if (blackbox.board[x - 1][y - 1].isSysMarked && blackbox.board[x + 1][y - 1].isSysMarked) {
+                    blackbox.board[x][y].lineType = constant.LineType.RETURN_RIGHT;
+                    nextCell = blackbox.board[x][y + 1];
+                    newDirection = constant.MoveDirection.RETURN_RIGHT;
+                }
+                else if (blackbox.board[x][y - 1].isSysMarked) {
                     blackbox.board[x][y].lineType |= constant.LineType.HORIZONTAL;
                     nextCell = blackbox.board[x][y - 1];
                 }
@@ -62,7 +72,12 @@ module.exports = (function () {
                 }
             }
             else if (direction == constant.MoveDirection.TOP) {
-                if (blackbox.board[x - 1][y].isSysMarked) {
+                if (blackbox.board[x - 1][y - 1].isSysMarked && blackbox.board[x - 1][y + 1].isSysMarked) {
+                    blackbox.board[x][y].lineType = constant.LineType.RETURN_BOTTOM;
+                    nextCell = blackbox.board[x + 1][y];
+                    newDirection = constant.MoveDirection.RETURN_BOTTOM;
+                }
+                else if (blackbox.board[x - 1][y + 1].isSysMarked) {
                     blackbox.board[x][y].lineType |= constant.LineType.VERTICAL;
                     nextCell = blackbox.board[x - 1][y];
                 }
@@ -82,7 +97,12 @@ module.exports = (function () {
                 }
             }
             else if (direction == constant.MoveDirection.BOTTOM) {
-                if (blackbox.board[x + 1][y].isSysMarked) {
+                if (blackbox.board[x + 1][y + 1].isSysMarked && blackbox.board[x + 1][y - 1].isSysMarked) {
+                    blackbox.board[x][y].lineType = constant.LineType.RETURN_TOP;
+                    nextCell = blackbox.board[x - 1][y];
+                    newDirection = constant.MoveDirection.RETURN_TOP;
+                }
+                else if (blackbox.board[x + 1][y].isSysMarked) {
                     blackbox.board[x][y].lineType |= constant.LineType.VERTICAL;
                     nextCell = blackbox.board[x + 1][y];
                 }
@@ -101,10 +121,26 @@ module.exports = (function () {
                     nextCell = blackbox.board[x + 1][y];
                 }
             }
+            else if(direction == constant.MoveDirection.RETURN_LEFT){
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_HORIZONTAL;
+                nextCell = blackbox.board[x][y-1];
+            }
+            else if(direction == constant.MoveDirection.RETURN_RIGHT){
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_HORIZONTAL;
+                nextCell = blackbox.board[x][y+1];
+            }
+            else if(direction == constant.MoveDirection.RETURN_TOP){
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL;
+                nextCell = blackbox.board[x - 1][y];
+            }
+            else if(direction == constant.MoveDirection.RETURN_BOTTOM){
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL;
+                nextCell = blackbox.board[x + 1][y];
+            }
             blackbox.board[x][y].updateStyle();
             return [nextCell, newDirection];
         };
-
+        /*
         for (var i = 0; i < 5; i++) {
             var x = commonHelper.getRandomIntInclusive(1, 8);
             var y = commonHelper.getRandomIntInclusive(1, 8);
@@ -115,7 +151,30 @@ module.exports = (function () {
             blackbox.board[x][y].isSysMarked = true;
             blackbox.board[x][y].updateStyle();
         }
+        */
+        blackbox.board[1][6].isSysMarked = true;
+        blackbox.board[1][6].updateStyle();
+        blackbox.board[4][2].isSysMarked = true;
+        blackbox.board[4][2].updateStyle();
+        blackbox.board[4][4].isSysMarked = true;
+        blackbox.board[4][4].updateStyle();
+        blackbox.board[6][2].isSysMarked = true;
+        blackbox.board[6][2].updateStyle();
+        blackbox.board[6][4].isSysMarked = true;
+        blackbox.board[6][4].updateStyle();
+        var edgeGroup = 1;
+        //left
         for (var i = 1; i < 9; i++) {
+            if (blackbox.board[i][0].edgeText != "")
+                continue;
+            else if (blackbox.board[i][1].isSysMarked) {
+                blackbox.board[i][0].edgeText = "H";
+                continue;
+            }
+            else if (blackbox.board[i - 1][1].isSysMarked || blackbox.board[i + 1][1].isSysMarked) {
+                blackbox.board[i][0].edgeText = "R";
+                continue;
+            }
             var isEnd = false;
             var xIndex = i;
             var yIndex = 1;
@@ -126,10 +185,17 @@ module.exports = (function () {
                     isEnd = true;
                 else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9) {
                     isEnd = true;
+                    if (value[0].indexX == i && value[0].indexY == 0)
+                        blackbox.board[i][0].edgeText = "R";
+                    else {
+                        blackbox.board[i][0].edgeText = edgeGroup.toString();
+                        blackbox.board[value[0].indexX][value[0].indexY].edgeText = edgeGroup.toString();
+                        edgeGroup++;
+                    }
                 }
                 else if (value[0].isSysMarked) {
                     isEnd = true;
-                    blackbox.board[i][1].edgeText = "H";
+                    blackbox.board[i][0].edgeText = "H";
                 }
                 else {
                     direction = value[1]
@@ -138,7 +204,18 @@ module.exports = (function () {
                 }
             }
         }
+        //top
         for (var i = 1; i < 9; i++) {
+            if (blackbox.board[0][i].edgeText != "")
+                continue;
+            else if (blackbox.board[1][i].isSysMarked) {
+                blackbox.board[0][i].edgeText = "H";
+                continue;
+            }
+            else if (blackbox.board[1][i - 1].isSysMarked || blackbox.board[1][i + 1].isSysMarked) {
+                blackbox.board[0][i].edgeText = "R";
+                continue;
+            }
             var isEnd = false;
             var xIndex = 1;
             var yIndex = i;
@@ -147,11 +224,19 @@ module.exports = (function () {
                 var value = moveNext(blackbox.board[xIndex][yIndex], direction);
                 if (value[0] == null)
                     isEnd = true;
-                else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9)
+                else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9) {
                     isEnd = true;
+                    if (value[0].indexX == 0 && value[0].indexY == i)
+                        blackbox.board[0][i].edgeText = "R";
+                    else {
+                        blackbox.board[0][i].edgeText = edgeGroup.toString();
+                        blackbox.board[value[0].indexX][value[0].indexY].edgeText = edgeGroup.toString();
+                        edgeGroup++;
+                    }
+                }
                 else if (value[0].isSysMarked) {
                     isEnd = true;
-                    blackbox.board[1][i].edgeText = "H";
+                    blackbox.board[0][i].edgeText = "H";
                 }
                 else {
                     direction = value[1]
@@ -160,7 +245,18 @@ module.exports = (function () {
                 }
             }
         }
+        //right
         for (var i = 1; i < 9; i++) {
+            if (blackbox.board[i][9].edgeText != "")
+                continue;
+            else if (blackbox.board[i][8].isSysMarked) {
+                blackbox.board[i][9].edgeText = "H";
+                continue;
+            }
+            else if (blackbox.board[i - 1][8].isSysMarked || blackbox.board[i + 1][8].isSysMarked) {
+                blackbox.board[i][9].edgeText = "R";
+                continue;
+            }
             var isEnd = false;
             var xIndex = i;
             var yIndex = 8;
@@ -169,11 +265,19 @@ module.exports = (function () {
                 var value = moveNext(blackbox.board[xIndex][yIndex], direction);
                 if (value[0] == null)
                     isEnd = true;
-                else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9)
+                else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9) {
                     isEnd = true;
+                    if (value[0].indexX == i && value[0].indexY == 9)
+                        blackbox.board[i][9].edgeText = "R";
+                    else {
+                        blackbox.board[i][9].edgeText = edgeGroup.toString();
+                        blackbox.board[value[0].indexX][value[0].indexY].edgeText = edgeGroup.toString();
+                        edgeGroup++;
+                    }
+                }
                 else if (value[0].isSysMarked) {
                     isEnd = true;
-                    blackbox.board[i][8].edgeText = "H";
+                    blackbox.board[i][9].edgeText = "H";
                 }
                 else {
                     direction = value[1]
@@ -182,7 +286,18 @@ module.exports = (function () {
                 }
             }
         }
+        //bottom
         for (var i = 1; i < 9; i++) {
+            if (blackbox.board[9][i].edgeText != "")
+                continue;
+            else if (blackbox.board[8][i].isSysMarked) {
+                blackbox.board[9][i].edgeText = "H";
+                continue;
+            }
+            else if (blackbox.board[8][i - 1].isSysMarked || blackbox.board[8][i + 1].isSysMarked) {
+                blackbox.board[9][i].edgeText = "R";
+                continue;
+            }
             var isEnd = false;
             var xIndex = 8;
             var yIndex = i;
@@ -191,11 +306,19 @@ module.exports = (function () {
                 var value = moveNext(blackbox.board[xIndex][yIndex], direction);
                 if (value[0] == null)
                     isEnd = true;
-                else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9)
+                else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9) {
                     isEnd = true;
+                    if (value[0].indexX == 9 && value[0].indexY == i)
+                        blackbox.board[9][i].edgeText = "R";
+                    else {
+                        blackbox.board[9][i].edgeText = edgeGroup.toString();
+                        blackbox.board[value[0].indexX][value[0].indexY].edgeText = edgeGroup.toString();
+                        edgeGroup++;
+                    }
+                }
                 else if (value[0].isSysMarked) {
                     isEnd = true;
-                    blackbox.board[8][i].edgeText = "H";
+                    blackbox.board[9][i].edgeText = "H";
                 }
                 else {
                     direction = value[1]
