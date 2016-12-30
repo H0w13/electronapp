@@ -4,7 +4,49 @@
     padding: 0px !important;
     height: 60px;
     width: 60px;
+    background-repeat:no-repeat; 
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+}
+
+.blackbox-cell-bg-blank{    
     background-image: url(img/blank.gif);
+}
+.blackbox-cell-bg-bottomleft{    
+    background-image: url(img/bottomleft.gif);
+}
+.blackbox-cell-bg-bottomleftright{    
+    background-image: url(img/bottomleftright.gif);
+}
+.blackbox-cell-bg-bottomright{    
+    background-image: url(img/bottomright.gif);
+}
+.blackbox-cell-bg-cross{    
+    background-image: url(img/cross.gif);
+}
+.blackbox-cell-bg-horizontal{    
+    background-image: url(img/horizontal.gif);
+}
+.blackbox-cell-bg-topbottomleft{    
+    background-image: url(img/topbottomleft.gif);
+}
+.blackbox-cell-bg-topbottomright{    
+    background-image: url(img/topbottomright.gif);
+}
+.blackbox-cell-bg-topleft{    
+    background-image: url(img/topleft.gif);
+}
+.blackbox-cell-bg-topleftright{    
+    background-image: url(img/topleftright.gif);
+}
+.blackbox-cell-bg-topright{    
+    background-image: url(img/topright.gif);
+}
+.blackbox-cell-bg-vertical{    
+    background-image: url(img/vertical.gif);
+}
+.blackbox-cell-bg-marked{    
+    background-image: url(img/black-round.gif);
 }
 
 .blackbox-cell-corner{
@@ -22,4 +64,5 @@
     height: 60px;
     width: 60px;
     background-color: grey;
+    text-align: center;
 }
