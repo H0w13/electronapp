@@ -1,6 +1,7 @@
 ;
 const blackboxCellModel = require("../models/blackboxmodel.js");
 const commonHelper = require("../lib/common.js");
+const constant = require("../lib/consts.js");
 module.exports = (function () {
     var blackbox = {
         board: []
@@ -14,113 +15,93 @@ module.exports = (function () {
             blackbox.board.push(row);
         }
         //generate puzzle
-        var moveDirection = {
-            LEFT: 0,
-            RIGHT: 1,
-            TOP: 2,
-            BOTTOM: 3
-        };
-        var LineType = {
-            BLANK: 0,
-            BOTTOM_LEFT: 6,
-            BOTTOM_LEFT_RIGHT: 14,
-            BOTTOM_RIGHT: 10,
-            CROSS: 15,
-            HORIZONTAL: 12,
-            TOP_BOTTOM_LEFT: 7,
-            TOP_BOTTOM_RIGHT: 11,
-            TOP_LEFT: 5,
-            TOP_LEFT_RIGHT: 13,
-            TOP_RIGHT: 9,
-            VERTICAL: 3,
-        };
+        
         var moveNext = function (cell, direction) {
             var x = cell.indexX;
             var y = cell.indexY;
-            console.log(x + ", " + y);
             var nextCell = null;
             var newDirection = direction;
-            if (direction == moveDirection.RIGHT) {
+            if (direction == constant.MoveDirection.RIGHT) {
                 if(blackbox.board[x][y + 1].isSysMarked)
                 {
-                    blackbox.board[x][y].lineType |= LineType.HORIZONTAL;
+                    blackbox.board[x][y].lineType |= constant.LineType.HORIZONTAL;
                     nextCell = blackbox.board[x][y + 1];
                 }
                 else if (blackbox.board[x - 1][y + 1].isSysMarked) {
-                    blackbox.board[x][y].lineType |= LineType.BOTTOM_LEFT;
+                    blackbox.board[x][y].lineType |= constant.LineType.BOTTOM_LEFT;
                     nextCell = blackbox.board[x + 1][y];
-                    newDirection = moveDirection.BOTTOM;
+                    newDirection = constant.MoveDirection.BOTTOM;
                 }
                 else if (blackbox.board[x + 1][y + 1].isSysMarked) {
-                    blackbox.board[x][y].lineType |= LineType.TOP_LEFT;
+                    blackbox.board[x][y].lineType |= constant.LineType.TOP_LEFT;
                     nextCell = blackbox.board[x - 1][y];
-                    newDirection = moveDirection.TOP;
+                    newDirection = constant.MoveDirection.TOP;
                 }
                 else {
-                    blackbox.board[x][y].lineType |= LineType.HORIZONTAL;
+                    blackbox.board[x][y].lineType |= constant.LineType.HORIZONTAL;
                     nextCell = blackbox.board[x][y + 1];
                 }
             }
-            else if (direction == moveDirection.LEFT) {
+            else if (direction == constant.MoveDirection.LEFT) {
                 if(blackbox.board[x][y - 1].isSysMarked)
                 {
-                    blackbox.board[x][y].lineType |= LineType.HORIZONTAL;
+                    blackbox.board[x][y].lineType |= constant.LineType.HORIZONTAL;
                     nextCell = blackbox.board[x][y - 1];
                 }
                 else if (blackbox.board[x - 1][y - 1].isSysMarked) {
-                    blackbox.board[x][y].lineType |= LineType.BOTTOM_RIGHT;
+                    blackbox.board[x][y].lineType |= constant.LineType.BOTTOM_RIGHT;
                     nextCell = blackbox.board[x + 1][y];
-                    newDirection = moveDirection.BOTTOM;
+                    newDirection = constant.MoveDirection.BOTTOM;
                 }
                 else if (blackbox.board[x + 1][y - 1].isSysMarked) {
-                    blackbox.board[x][y].lineType |= LineType.TOP_RIGHT;
+                    blackbox.board[x][y].lineType |= constant.LineType.TOP_RIGHT;
                     nextCell = blackbox.board[x - 1][y];
-                    newDirection = moveDirection.TOP;
+                    newDirection = constant.MoveDirection.TOP;
                 }
                 else {
-                    blackbox.board[x][y].lineType |= LineType.HORIZONTAL;
+                    blackbox.board[x][y].lineType |= constant.LineType.HORIZONTAL;
                     nextCell = blackbox.board[x][y - 1];
                 }
             }
-            else if (direction == moveDirection.TOP) {
+            else if (direction == constant.MoveDirection.TOP) {
                 if(blackbox.board[x - 1][y].isSysMarked)
                 {
-                    blackbox.board[x][y].lineType |= LineType.VERTICAL;
+                    blackbox.board[x][y].lineType |= constant.LineType.VERTICAL;
                     nextCell = blackbox.board[x - 1][y];
                 }
                 else if (blackbox.board[x - 1][y - 1].isSysMarked) {
-                    blackbox.board[x][y].lineType |= LineType.BOTTOM_RIGHT;
+                    blackbox.board[x][y].lineType |= constant.LineType.BOTTOM_RIGHT;
                     nextCell = blackbox.board[x][y + 1];
-                    newDirection = moveDirection.RIGHT;
+                    newDirection = constant.MoveDirection.RIGHT;
                 }
                 else if (blackbox.board[x - 1][y + 1].isSysMarked) {
-                    blackbox.board[x][y].lineType |= LineType.BOTTOM_LEFT;
+                    blackbox.board[x][y].lineType |= constant.LineType.BOTTOM_LEFT;
                     nextCell = blackbox.board[x][y - 1];
-                    newDirection = moveDirection.LEFT;
+                    newDirection = constant.MoveDirection.LEFT;
                 }
                 else {
-                    blackbox.board[x][y].lineType |= LineType.VERTICAL;
+                    blackbox.board[x][y].lineType |= constant.LineType.VERTICAL;
                     nextCell = blackbox.board[x - 1][y];
                 }
             }
-            else if (direction == moveDirection.BOTTOM) {
+            else if (direction == constant.MoveDirection.BOTTOM) {
                 if(blackbox.board[x + 1][y].isSysMarked)
                 {
-                    blackbox.board[x][y].lineType |= LineType.VERTICAL;
+                    blackbox.board[x][y].lineType |= constant.LineType.VERTICAL;
                     nextCell = blackbox.board[x + 1][y];
                 }
                 else if (blackbox.board[x + 1][y - 1].isSysMarked) {
-                    blackbox.board[x][y].lineType |= LineType.TOP_RIGHT;
+                    blackbox.board[x][y].lineType |= constant.LineType.TOP_RIGHT;
                     nextCell = blackbox.board[x][y + 1];
-                    newDirection = moveDirection.RIGHT;
+                    newDirection = constant.MoveDirection.RIGHT;
                 }
                 else if (blackbox.board[x + 1][y + 1].isSysMarked) {
-                    blackbox.board[x][y].lineType |= LineType.TOP_LEFT;
+                    blackbox.board[x][y].lineType |= constant.LineType.TOP_LEFT;
                     nextCell = blackbox.board[x][y - 1];
-                    newDirection = moveDirection.LEFT;
+                    newDirection = constant.MoveDirection.LEFT;
                 }
                 else {
-                    blackbox.board[x][y].lineType |= LineType.VERTICAL;
+                    blackbox.board[x][y].lineType |= constant.LineType.VERTICAL;
                     nextCell = blackbox.board[x + 1][y];
                 }
             }
@@ -142,7 +123,7 @@ module.exports = (function () {
             var isEnd = false;
             var xIndex = i;
             var yIndex = 1;
-            var direction = moveDirection.RIGHT;
+            var direction = constant.MoveDirection.RIGHT;
             while (!isEnd) {
                 var value = moveNext(blackbox.board[xIndex][yIndex], direction);
                 if (value[0] == null)
@@ -162,7 +143,7 @@ module.exports = (function () {
             var isEnd = false;
             var xIndex = 1;
             var yIndex = i;
-            var direction = moveDirection.BOTTOM;
+            var direction = constant.MoveDirection.BOTTOM;
             while (!isEnd) {
                 var value = moveNext(blackbox.board[xIndex][yIndex], direction);
                 if (value[0] == null)
@@ -182,7 +163,7 @@ module.exports = (function () {
             var isEnd = false;
             var xIndex = i;
             var yIndex = 8;
-            var direction = moveDirection.LEFT;
+            var direction = constant.MoveDirection.LEFT;
             while (!isEnd) {
                 var value = moveNext(blackbox.board[xIndex][yIndex], direction);
                 if (value[0] == null)
@@ -202,7 +183,7 @@ module.exports = (function () {
             var isEnd = false;
             var xIndex = 8;
             var yIndex = i;
-            var direction = moveDirection.TOP;
+            var direction = constant.MoveDirection.TOP;
             while (!isEnd) {
                 var value = moveNext(blackbox.board[xIndex][yIndex], direction);
                 if (value[0] == null)
