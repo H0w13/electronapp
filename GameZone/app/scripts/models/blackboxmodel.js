@@ -1,6 +1,6 @@
 ;
 const constant = require("../lib/consts.js");
-module.exports = function (x, y) {    
+module.exports = function (x, y) {
     var obj = {
         indexX: x,
         indexY: y
@@ -61,6 +61,18 @@ module.exports = function (x, y) {
                     obj.style = obj.style.replace(bgp, "blackbox-cell-bg-topright");
                 else if (obj.lineType == constant.LineType.VERTICAL)
                     obj.style = obj.style.replace(bgp, "blackbox-cell-bg-vertical");
+                else if (obj.lineType == constant.LineType.RETURN_TOP)
+                    obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returntop");
+                else if (obj.lineType == constant.LineType.RETURN_BOTTOM)
+                    obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnbottom");
+                else if (obj.lineType == constant.LineType.RETURN_LEFT)
+                    obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnleft");
+                else if (obj.lineType == constant.LineType.RETURN_RIGHT)
+                    obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnright");
+                else if (obj.lineType == constant.LineType.RETURN_HORIZONTAL)
+                    obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnhorizontal");
+                else if (obj.lineType == constant.LineType.RETURN_VERTICAL)
+                    obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnvertical");
             }
         }
     };

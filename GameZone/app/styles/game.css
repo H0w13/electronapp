@@ -45,6 +45,24 @@
 .blackbox-cell-bg-vertical{    
     background-image: url(img/vertical.gif);
 }
+.blackbox-cell-bg-returntop{    
+    background-image: url(img/returntop.gif);
+}
+.blackbox-cell-bg-returnbottom{    
+    background-image: url(img/returnbottom.gif);
+}
+.blackbox-cell-bg-returnleft{    
+    background-image: url(img/returnleft.gif);
+}
+.blackbox-cell-bg-returnright{    
+    background-image: url(img/returnright.gif);
+}
+.blackbox-cell-bg-returnhorizontal{    
+    background-image: url(img/returnhorizontal.gif);
+}
+.blackbox-cell-bg-returnvertical{    
+    background-image: url(img/returnvertical.gif);
+}
 .blackbox-cell-bg-marked{    
     background-image: url(img/black-round.gif);
 }
