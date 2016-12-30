@@ -121,20 +121,20 @@ module.exports = (function () {
                     nextCell = blackbox.board[x + 1][y];
                 }
             }
-            else if(direction == constant.MoveDirection.RETURN_LEFT){
-                blackbox.board[x][y].lineType = constant.LineType.RETURN_HORIZONTAL;
-                nextCell = blackbox.board[x][y-1];
+            else if (direction == constant.MoveDirection.RETURN_LEFT) {
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_HORIZONTAL | (blackbox.board[x][y].lineType & constant.LineType.VERTICAL);
+                nextCell = blackbox.board[x][y - 1];
             }
-            else if(direction == constant.MoveDirection.RETURN_RIGHT){
-                blackbox.board[x][y].lineType = constant.LineType.RETURN_HORIZONTAL;
-                nextCell = blackbox.board[x][y+1];
+            else if (direction == constant.MoveDirection.RETURN_RIGHT) {
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_HORIZONTAL | (blackbox.board[x][y].lineType & constant.LineType.VERTICAL);
+                nextCell = blackbox.board[x][y + 1];
             }
-            else if(direction == constant.MoveDirection.RETURN_TOP){
-                blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL;
+            else if (direction == constant.MoveDirection.RETURN_TOP) {                
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL | (blackbox.board[x][y].lineType & constant.LineType.HORIZONTAL);             
                 nextCell = blackbox.board[x - 1][y];
             }
-            else if(direction == constant.MoveDirection.RETURN_BOTTOM){
-                blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL;
+            else if (direction == constant.MoveDirection.RETURN_BOTTOM) {
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL | (blackbox.board[x][y].lineType & constant.LineType.HORIZONTAL);
                 nextCell = blackbox.board[x + 1][y];
             }
             blackbox.board[x][y].updateStyle();
@@ -154,14 +154,14 @@ module.exports = (function () {
         */
         blackbox.board[1][6].isSysMarked = true;
         blackbox.board[1][6].updateStyle();
-        blackbox.board[4][2].isSysMarked = true;
-        blackbox.board[4][2].updateStyle();
-        blackbox.board[4][4].isSysMarked = true;
-        blackbox.board[4][4].updateStyle();
-        blackbox.board[6][2].isSysMarked = true;
-        blackbox.board[6][2].updateStyle();
-        blackbox.board[6][4].isSysMarked = true;
-        blackbox.board[6][4].updateStyle();
+        blackbox.board[4][3].isSysMarked = true;
+        blackbox.board[4][3].updateStyle();
+        blackbox.board[4][5].isSysMarked = true;
+        blackbox.board[4][5].updateStyle();
+        blackbox.board[6][3].isSysMarked = true;
+        blackbox.board[6][3].updateStyle();
+        blackbox.board[6][5].isSysMarked = true;
+        blackbox.board[6][5].updateStyle();
         var edgeGroup = 1;
         //left
         for (var i = 1; i < 9; i++) {

@@ -73,6 +73,12 @@ module.exports = function (x, y) {
                     obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnhorizontal");
                 else if (obj.lineType == constant.LineType.RETURN_VERTICAL)
                     obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnvertical");
+                else if (((obj.lineType & constant.LineType.RETURN_HORIZONTAL) == constant.LineType.RETURN_HORIZONTAL)
+                    && ((obj.lineType & constant.LineType.VERTICAL) == constant.LineType.VERTICAL))
+                    obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnhorizontalvertical");
+                else if (((obj.lineType & constant.LineType.RETURN_VERTICAL) == constant.LineType.RETURN_VERTICAL)
+                    && ((obj.lineType & constant.LineType.HORIZONTAL) == constant.LineType.HORIZONTAL))                    
+                    obj.style = obj.style.replace(bgp, "blackbox-cell-bg-returnverticalhorizontal");
             }
         }
     };

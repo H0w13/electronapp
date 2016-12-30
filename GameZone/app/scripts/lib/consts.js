@@ -28,8 +28,8 @@ module.exports = (function () {
         RETURN_RIGHT: 8,
         RETURN_TOP: 1,
         RETURN_BOTTOM: 2,
-        RETURN_HORIZONTAL: 17,
-        RETURN_VERTICAL: 18
+        RETURN_HORIZONTAL: 16,
+        RETURN_VERTICAL: 32
     };
     constant.CellType = {
         CORNER_BUTTON: "CORNER_BUTTON",

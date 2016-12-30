@@ -63,6 +63,12 @@
 .blackbox-cell-bg-returnvertical{    
     background-image: url(img/returnvertical.gif);
 }
+.blackbox-cell-bg-returnhorizontalvertical{    
+    background-image: url(img/returnhorizontal_vertical.gif);
+}
+.blackbox-cell-bg-returnverticalhorizontal{    
+    background-image: url(img/returnvertical_horizontal.gif);
+}
 .blackbox-cell-bg-marked{    
     background-image: url(img/black-round.gif);
 }
