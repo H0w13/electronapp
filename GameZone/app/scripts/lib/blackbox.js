@@ -15,15 +15,14 @@ module.exports = (function () {
             blackbox.board.push(row);
         }
         //generate puzzle
-        
+
         var moveNext = function (cell, direction) {
             var x = cell.indexX;
             var y = cell.indexY;
             var nextCell = null;
             var newDirection = direction;
             if (direction == constant.MoveDirection.RIGHT) {
-                if(blackbox.board[x][y + 1].isSysMarked)
-                {
+                if (blackbox.board[x][y + 1].isSysMarked) {
                     blackbox.board[x][y].lineType |= constant.LineType.HORIZONTAL;
                     nextCell = blackbox.board[x][y + 1];
                 }
@@ -43,8 +42,7 @@ module.exports = (function () {
                 }
             }
             else if (direction == constant.MoveDirection.LEFT) {
-                if(blackbox.board[x][y - 1].isSysMarked)
-                {
+                if (blackbox.board[x][y - 1].isSysMarked) {
                     blackbox.board[x][y].lineType |= constant.LineType.HORIZONTAL;
                     nextCell = blackbox.board[x][y - 1];
                 }
@@ -64,8 +62,7 @@ module.exports = (function () {
                 }
             }
             else if (direction == constant.MoveDirection.TOP) {
-                if(blackbox.board[x - 1][y].isSysMarked)
-                {
+                if (blackbox.board[x - 1][y].isSysMarked) {
                     blackbox.board[x][y].lineType |= constant.LineType.VERTICAL;
                     nextCell = blackbox.board[x - 1][y];
                 }
@@ -85,8 +82,7 @@ module.exports = (function () {
                 }
             }
             else if (direction == constant.MoveDirection.BOTTOM) {
-                if(blackbox.board[x + 1][y].isSysMarked)
-                {
+                if (blackbox.board[x + 1][y].isSysMarked) {
                     blackbox.board[x][y].lineType |= constant.LineType.VERTICAL;
                     nextCell = blackbox.board[x + 1][y];
                 }
@@ -128,17 +124,20 @@ module.exports = (function () {
                 var value = moveNext(blackbox.board[xIndex][yIndex], direction);
                 if (value[0] == null)
                     isEnd = true;
-                else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9)
+                else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9) {
                     isEnd = true;
-                else if (value[0].isSysMarked)
+                }
+                else if (value[0].isSysMarked) {
                     isEnd = true;
+                    blackbox.board[i][1].edgeText = "H";
+                }
                 else {
                     direction = value[1]
                     xIndex = value[0].indexX;
                     yIndex = value[0].indexY;
                 }
             }
-        } 
+        }
         for (var i = 1; i < 9; i++) {
             var isEnd = false;
             var xIndex = 1;
@@ -150,15 +149,17 @@ module.exports = (function () {
                     isEnd = true;
                 else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9)
                     isEnd = true;
-                else if (value[0].isSysMarked)
+                else if (value[0].isSysMarked) {
                     isEnd = true;
+                    blackbox.board[1][i].edgeText = "H";
+                }
                 else {
                     direction = value[1]
                     xIndex = value[0].indexX;
                     yIndex = value[0].indexY;
                 }
             }
-        } 
+        }
         for (var i = 1; i < 9; i++) {
             var isEnd = false;
             var xIndex = i;
@@ -170,15 +171,17 @@ module.exports = (function () {
                     isEnd = true;
                 else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9)
                     isEnd = true;
-                else if (value[0].isSysMarked)
+                else if (value[0].isSysMarked) {
                     isEnd = true;
+                    blackbox.board[i][8].edgeText = "H";
+                }
                 else {
                     direction = value[1]
                     xIndex = value[0].indexX;
                     yIndex = value[0].indexY;
                 }
             }
-        } 
+        }
         for (var i = 1; i < 9; i++) {
             var isEnd = false;
             var xIndex = 8;
@@ -190,15 +193,17 @@ module.exports = (function () {
                     isEnd = true;
                 else if (value[0].indexX == 0 || value[0].indexX == 9 || value[0].indexY == 0 || value[0].indexY == 9)
                     isEnd = true;
-                else if (value[0].isSysMarked)
+                else if (value[0].isSysMarked) {
                     isEnd = true;
+                    blackbox.board[8][i].edgeText = "H";
+                }
                 else {
                     direction = value[1]
                     xIndex = value[0].indexX;
                     yIndex = value[0].indexY;
                 }
             }
-        }        
+        }
     };
     blackbox.showLines = function () {
 
