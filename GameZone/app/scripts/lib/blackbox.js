@@ -4,7 +4,8 @@ const commonHelper = require("../lib/common.js");
 const constant = require("../lib/consts.js");
 module.exports = (function () {
     var blackbox = {
-        board: []
+        board: [],
+        showValidate: false
     };
     blackbox.init = function () {
         for (var i = 0; i < 10; i++) {
@@ -323,7 +324,7 @@ module.exports = (function () {
                     for (var j = 0; j < 10; j++) {
                         if (blackbox.board[i][j].cellType == constant.CellType.EDGE) {
                             if (blackbox.board[i][j].edgeText == cell.edgeText
-                            && i != cell.indexX && j != cell.indexY) {
+                                && i != cell.indexX && j != cell.indexY) {
                                 blackbox.board[i][j].hideEdgeText = false;
                                 return;
                             }
@@ -340,7 +341,20 @@ module.exports = (function () {
             }
             else
                 cell.style = cell.style.replace(bgp, "blackbox-cell-bg-blank");
+
+            var count = 0;
+            for (var i = 1; i < 9; i++) {
+                for (var j = 1; j < 9; j++) {
+                    if (blackbox.board[i][j].cellType == constant.CellType.CELL && blackbox.board[i][j].isUserMarked) {
+                        count++;
+                    }
+                }
+            }
+            blackbox.showValidate = count >= 5;
         }
+    };
+    blackbox.validate = function(){
+
     };
     blackbox.init();
     return blackbox;

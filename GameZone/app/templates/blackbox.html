@@ -1,9 +1,15 @@
 <div class="grid margin-top-0 border-0">
-    <div class="row">
+    <div class="row cells6">
         <div class="cell">
             <button class="shortcut-button bg-cyan bg-active-darkBlue fg-white">
             <span class="icon mif-gamepad"></span>
             <span class="title">New Game</span>
+        </button>
+        </div>
+        <div class="cell" ng-if="boardscope.showValidate">
+            <button class="shortcut-button bg-cyan bg-active-darkBlue fg-white" data-ng-click="boardscope.validate()">
+            <span class="icon mif-checkmark"></span>
+            <span class="title">Validate</span>
         </button>
         </div>
     </div>
