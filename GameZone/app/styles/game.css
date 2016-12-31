@@ -12,65 +12,11 @@
 .blackbox-cell-bg-blank{    
     background-image: url(img/blank.gif);
 }
-.blackbox-cell-bg-bottomleft{    
-    background-image: url(img/bottomleft.gif);
-}
-.blackbox-cell-bg-bottomleftright{    
-    background-image: url(img/bottomleftright.gif);
-}
-.blackbox-cell-bg-bottomright{    
-    background-image: url(img/bottomright.gif);
-}
-.blackbox-cell-bg-cross{    
-    background-image: url(img/cross.gif);
-}
-.blackbox-cell-bg-horizontal{    
-    background-image: url(img/horizontal.gif);
-}
-.blackbox-cell-bg-topbottomleft{    
-    background-image: url(img/topbottomleft.gif);
-}
-.blackbox-cell-bg-topbottomright{    
-    background-image: url(img/topbottomright.gif);
-}
-.blackbox-cell-bg-topleft{    
-    background-image: url(img/topleft.gif);
-}
-.blackbox-cell-bg-topleftright{    
-    background-image: url(img/topleftright.gif);
-}
-.blackbox-cell-bg-topright{    
-    background-image: url(img/topright.gif);
-}
-.blackbox-cell-bg-vertical{    
-    background-image: url(img/vertical.gif);
-}
-.blackbox-cell-bg-returntop{    
-    background-image: url(img/returntop.gif);
-}
-.blackbox-cell-bg-returnbottom{    
-    background-image: url(img/returnbottom.gif);
-}
-.blackbox-cell-bg-returnleft{    
-    background-image: url(img/returnleft.gif);
-}
-.blackbox-cell-bg-returnright{    
-    background-image: url(img/returnright.gif);
-}
-.blackbox-cell-bg-returnhorizontal{    
-    background-image: url(img/returnhorizontal.gif);
-}
-.blackbox-cell-bg-returnvertical{    
-    background-image: url(img/returnvertical.gif);
-}
-.blackbox-cell-bg-returnhorizontalvertical{    
-    background-image: url(img/returnhorizontal_vertical.gif);
-}
-.blackbox-cell-bg-returnverticalhorizontal{    
-    background-image: url(img/returnvertical_horizontal.gif);
-}
 .blackbox-cell-bg-marked{    
     background-image: url(img/black-round.gif);
+}
+.blackbox-cell-bg-redmarked{    
+    background-image: url(img/red-round.gif);
 }
 
 .blackbox-cell-corner{
