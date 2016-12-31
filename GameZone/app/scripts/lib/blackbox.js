@@ -137,10 +137,9 @@ module.exports = (function () {
                 blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL | (blackbox.board[x][y].lineType & constant.LineType.HORIZONTAL);
                 nextCell = blackbox.board[x + 1][y];
             }
-            blackbox.board[x][y].updateStyle();
             return [nextCell, newDirection];
         };
-        /*
+        
         for (var i = 0; i < 5; i++) {
             var x = commonHelper.getRandomIntInclusive(1, 8);
             var y = commonHelper.getRandomIntInclusive(1, 8);
@@ -148,26 +147,13 @@ module.exports = (function () {
                 x = commonHelper.getRandomIntInclusive(1, 8);
                 y = commonHelper.getRandomIntInclusive(1, 8);
             }
-            blackbox.board[x][y].isSysMarked = true;
-            blackbox.board[x][y].updateStyle();
+            blackbox.board[x][y].isSysMarked = true;            
         }
-        */
-        blackbox.board[1][6].isSysMarked = true;
-        blackbox.board[1][6].updateStyle();
-        blackbox.board[4][3].isSysMarked = true;
-        blackbox.board[4][3].updateStyle();
-        blackbox.board[4][5].isSysMarked = true;
-        blackbox.board[4][5].updateStyle();
-        blackbox.board[6][3].isSysMarked = true;
-        blackbox.board[6][3].updateStyle();
-        blackbox.board[6][5].isSysMarked = true;
-        blackbox.board[6][5].updateStyle();
+        
         var edgeGroup = 1;
         //left
-        for (var i = 1; i < 9; i++) {
-            if (blackbox.board[i][0].edgeText != "")
-                continue;
-            else if (blackbox.board[i][1].isSysMarked) {
+        for (var i = 1; i < 9; i++) {            
+            if (blackbox.board[i][1].isSysMarked) {
                 blackbox.board[i][0].edgeText = "H";
                 continue;
             }
@@ -175,6 +161,8 @@ module.exports = (function () {
                 blackbox.board[i][0].edgeText = "R";
                 continue;
             }
+            else if (blackbox.board[i][0].edgeText != "")
+                continue;
             var isEnd = false;
             var xIndex = i;
             var yIndex = 1;
@@ -205,10 +193,8 @@ module.exports = (function () {
             }
         }
         //top
-        for (var i = 1; i < 9; i++) {
-            if (blackbox.board[0][i].edgeText != "")
-                continue;
-            else if (blackbox.board[1][i].isSysMarked) {
+        for (var i = 1; i < 9; i++) {            
+            if (blackbox.board[1][i].isSysMarked) {
                 blackbox.board[0][i].edgeText = "H";
                 continue;
             }
@@ -216,6 +202,8 @@ module.exports = (function () {
                 blackbox.board[0][i].edgeText = "R";
                 continue;
             }
+            else if (blackbox.board[0][i].edgeText != "")
+                continue;
             var isEnd = false;
             var xIndex = 1;
             var yIndex = i;
@@ -246,10 +234,8 @@ module.exports = (function () {
             }
         }
         //right
-        for (var i = 1; i < 9; i++) {
-            if (blackbox.board[i][9].edgeText != "")
-                continue;
-            else if (blackbox.board[i][8].isSysMarked) {
+        for (var i = 1; i < 9; i++) {            
+            if (blackbox.board[i][8].isSysMarked) {
                 blackbox.board[i][9].edgeText = "H";
                 continue;
             }
@@ -257,6 +243,8 @@ module.exports = (function () {
                 blackbox.board[i][9].edgeText = "R";
                 continue;
             }
+            else if (blackbox.board[i][9].edgeText != "")
+                continue;
             var isEnd = false;
             var xIndex = i;
             var yIndex = 8;
@@ -287,10 +275,8 @@ module.exports = (function () {
             }
         }
         //bottom
-        for (var i = 1; i < 9; i++) {
-            if (blackbox.board[9][i].edgeText != "")
-                continue;
-            else if (blackbox.board[8][i].isSysMarked) {
+        for (var i = 1; i < 9; i++) {            
+            if (blackbox.board[8][i].isSysMarked) {
                 blackbox.board[9][i].edgeText = "H";
                 continue;
             }
@@ -298,6 +284,8 @@ module.exports = (function () {
                 blackbox.board[9][i].edgeText = "R";
                 continue;
             }
+            else if (blackbox.board[9][i].edgeText != "")
+                continue;
             var isEnd = false;
             var xIndex = 8;
             var yIndex = i;

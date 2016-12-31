@@ -14,7 +14,7 @@ function createWindow(windowParams) {
   // Create the browser window.
   mainWindow = new BrowserWindow(windowParams)
 
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
