@@ -18,6 +18,9 @@
 .blackbox-cell-bg-redmarked{    
     background-image: url(img/red-round.gif);
 }
+.blackbox-cell-bg-wrongmarked{    
+    background-image: url(img/wrong-round.gif);
+}
 
 .blackbox-cell-corner{
     border:none; 

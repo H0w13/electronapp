@@ -353,8 +353,20 @@ module.exports = (function () {
             blackbox.showValidate = count >= 5;
         }
     };
-    blackbox.validate = function(){
-
+    blackbox.validate = function () {
+        var bgp = /blackbox-cell-bg-\w+/g;
+        for (var i = 1; i < 9; i++) {
+            for (var j = 1; j < 9; j++) {
+                if (blackbox.board[i][j].cellType == constant.CellType.CELL) {
+                    if (blackbox.board[i][j].isUserMarked && blackbox.board[i][j].isSysMarked)
+                        continue;                    
+                    else if (blackbox.board[i][j].isUserMarked)
+                        blackbox.board[i][j].style = blackbox.board[i][j].style.replace(bgp, "blackbox-cell-bg-wrongmarked");
+                    else if (blackbox.board[i][j].isSysMarked)
+                        blackbox.board[i][j].style = blackbox.board[i][j].style.replace(bgp, "blackbox-cell-bg-redmarked");
+                }
+            }
+        }
     };
     blackbox.init();
     return blackbox;
