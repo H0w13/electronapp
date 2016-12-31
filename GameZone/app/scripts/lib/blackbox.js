@@ -14,8 +14,19 @@ module.exports = (function () {
             }
             blackbox.board.push(row);
         }
-        //generate puzzle
+        //generate marks
+        for (var i = 0; i < 5; i++) {
+            var x = commonHelper.getRandomIntInclusive(1, 8);
+            var y = commonHelper.getRandomIntInclusive(1, 8);
+            while (blackbox.board[x][y].isSysMarked) {
+                x = commonHelper.getRandomIntInclusive(1, 8);
+                y = commonHelper.getRandomIntInclusive(1, 8);
+            }
+            blackbox.board[x][y].isSysMarked = true;
+        }
 
+        //laser tracer
+        var edgeGroup = 1;
         var moveNext = function (cell, direction) {
             var x = cell.indexX;
             var y = cell.indexY;
@@ -129,8 +140,8 @@ module.exports = (function () {
                 blackbox.board[x][y].lineType = constant.LineType.RETURN_HORIZONTAL | (blackbox.board[x][y].lineType & constant.LineType.VERTICAL);
                 nextCell = blackbox.board[x][y + 1];
             }
-            else if (direction == constant.MoveDirection.RETURN_TOP) {                
-                blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL | (blackbox.board[x][y].lineType & constant.LineType.HORIZONTAL);             
+            else if (direction == constant.MoveDirection.RETURN_TOP) {
+                blackbox.board[x][y].lineType = constant.LineType.RETURN_VERTICAL | (blackbox.board[x][y].lineType & constant.LineType.HORIZONTAL);
                 nextCell = blackbox.board[x - 1][y];
             }
             else if (direction == constant.MoveDirection.RETURN_BOTTOM) {
@@ -139,20 +150,8 @@ module.exports = (function () {
             }
             return [nextCell, newDirection];
         };
-        
-        for (var i = 0; i < 5; i++) {
-            var x = commonHelper.getRandomIntInclusive(1, 8);
-            var y = commonHelper.getRandomIntInclusive(1, 8);
-            while (blackbox.board[x][y].isSysMarked) {
-                x = commonHelper.getRandomIntInclusive(1, 8);
-                y = commonHelper.getRandomIntInclusive(1, 8);
-            }
-            blackbox.board[x][y].isSysMarked = true;            
-        }
-        
-        var edgeGroup = 1;
         //left
-        for (var i = 1; i < 9; i++) {            
+        for (var i = 1; i < 9; i++) {
             if (blackbox.board[i][1].isSysMarked) {
                 blackbox.board[i][0].edgeText = "H";
                 continue;
@@ -193,7 +192,7 @@ module.exports = (function () {
             }
         }
         //top
-        for (var i = 1; i < 9; i++) {            
+        for (var i = 1; i < 9; i++) {
             if (blackbox.board[1][i].isSysMarked) {
                 blackbox.board[0][i].edgeText = "H";
                 continue;
@@ -234,7 +233,7 @@ module.exports = (function () {
             }
         }
         //right
-        for (var i = 1; i < 9; i++) {            
+        for (var i = 1; i < 9; i++) {
             if (blackbox.board[i][8].isSysMarked) {
                 blackbox.board[i][9].edgeText = "H";
                 continue;
@@ -275,7 +274,7 @@ module.exports = (function () {
             }
         }
         //bottom
-        for (var i = 1; i < 9; i++) {            
+        for (var i = 1; i < 9; i++) {
             if (blackbox.board[8][i].isSysMarked) {
                 blackbox.board[9][i].edgeText = "H";
                 continue;
@@ -316,8 +315,32 @@ module.exports = (function () {
             }
         }
     };
-    blackbox.showLines = function () {
-
+    blackbox.click = function (cell) {
+        if (cell.cellType == constant.CellType.EDGE) {
+            cell.hideEdgeText = false;
+            if (cell.edgeText != "R" && cell.edgeText != "H") {
+                for (var i = 0; i < 10; i++) {
+                    for (var j = 0; j < 10; j++) {
+                        if (blackbox.board[i][j].cellType == constant.CellType.EDGE) {
+                            if (blackbox.board[i][j].edgeText == cell.edgeText
+                            && i != cell.indexX && j != cell.indexY) {
+                                blackbox.board[i][j].hideEdgeText = false;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if (cell.cellType == constant.CellType.CELL) {
+            cell.isUserMarked = !cell.isUserMarked;
+            var bgp = /blackbox-cell-bg-\w+/g;
+            if (cell.isUserMarked) {
+                cell.style = cell.style.replace(bgp, "blackbox-cell-bg-marked");
+            }
+            else
+                cell.style = cell.style.replace(bgp, "blackbox-cell-bg-blank");
+        }
     };
     blackbox.init();
     return blackbox;

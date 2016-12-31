@@ -10,7 +10,7 @@
     <div class="row">
         <table class="">
             <tr ng-repeat="row in boardscope.board">
-                <td ng-repeat="cell in row" ng-class='cell.style' data-ng-click="cell.click()">
+                <td ng-repeat="cell in row" ng-class='cell.style' data-ng-click="boardscope.click(cell)">
                     <span ng-if="cell.cellType=='EDGE' && !cell.hideEdgeText">{{cell.edgeText}}</span>
                 </td>
             </tr>

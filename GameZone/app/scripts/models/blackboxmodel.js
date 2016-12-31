@@ -29,19 +29,6 @@ module.exports = function (x, y) {
     obj.edgeText = "";
     obj.hideEdgeText = true;
     obj.lineType = 0;
-    obj.click = function () {
-        if (obj.cellType == constant.CellType.EDGE)
-            obj.hideEdgeText = false;
-        else if (obj.cellType == constant.CellType.CELL) {
-            obj.isUserMarked = !obj.isUserMarked;
-            var bgp = /blackbox-cell-bg-\w+/g;
-            if (obj.isUserMarked) {
-                obj.style = obj.style.replace(bgp, "blackbox-cell-bg-marked");
-            }
-            else
-                obj.style = obj.style.replace(bgp, "blackbox-cell-bg-blank");
-        }
-    };
     obj.showMark = function () {
         if (obj.cellType == constant.CellType.CELL) {
             var bgp = /blackbox-cell-bg-\w+/g;
