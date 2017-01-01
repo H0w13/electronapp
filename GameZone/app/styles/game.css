@@ -22,6 +22,19 @@
     background-image: url(img/wrong-round.gif);
 }
 
+.blackbox-cell-bg-flash {
+  animation: blackbox-cell-bg-animation 0.5s infinite;
+}
+
+@keyframes blackbox-cell-bg-animation {
+  0% {
+    background-image: url(img/black-round.gif);
+  }
+  100% {
+    background-image: url(img/blank.gif);
+  }
+}
+
 .blackbox-cell-corner{
     border:none; 
     margin: 0px !important;

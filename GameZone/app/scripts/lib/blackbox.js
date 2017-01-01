@@ -357,15 +357,31 @@ module.exports = (function () {
     };
     blackbox.validate = function () {
         var bgp = /blackbox-cell-bg-\w+/g;
+        var isWon = true;
+        var count = 0;
         for (var i = 1; i < 9; i++) {
             for (var j = 1; j < 9; j++) {
                 if (blackbox.board[i][j].cellType == constant.CellType.CELL) {
                     if (blackbox.board[i][j].isUserMarked && blackbox.board[i][j].isSysMarked)
-                        continue;                    
-                    else if (blackbox.board[i][j].isUserMarked)
+                        count++;
+                    else if (blackbox.board[i][j].isUserMarked) {
+                        isWon = false;
                         blackbox.board[i][j].style = blackbox.board[i][j].style.replace(bgp, "blackbox-cell-bg-wrongmarked");
-                    else if (blackbox.board[i][j].isSysMarked)
+                    }
+                    else if (blackbox.board[i][j].isSysMarked) {
+                        isWon = false;
                         blackbox.board[i][j].style = blackbox.board[i][j].style.replace(bgp, "blackbox-cell-bg-redmarked");
+                    }
+                }
+            }
+        }
+        if (count == 5 && isWon) {
+            for (var i = 1; i < 9; i++) {
+                for (var j = 1; j < 9; j++) {
+                    if (blackbox.board[i][j].cellType == constant.CellType.CELL) {
+                        if (blackbox.board[i][j].isUserMarked)
+                            blackbox.board[i][j].style = blackbox.board[i][j].style.replace(bgp, "blackbox-cell-bg-flash");
+                    }
                 }
             }
         }
